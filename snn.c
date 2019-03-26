@@ -10,6 +10,9 @@
           N3
 
  * Fri Mar 15 16:59:21 CDT 2019
+ *
+ * Writing the network is the easy part. Preprocessing the data will be where
+ * the real work is.
  */
 
 #include <stdio.h>
@@ -17,18 +20,88 @@
 #include <math.h>
 #include "linear_algebra.h"
 
+double sigmoid(double x);
+
 // set some defaults. replace these with config file options later.
+#define LAYERS 3
 #define INPUT_ROWS 4
-#define INPUT_COLS 2
-#define H_LAYERS 1
-#define L1_NODES 3
-#define OUTPUTS 1
+
+#define LR 0.1
 
 typedef struct{
     double *weight;
     double bias;
     double output;
 }neuron;
+
+// points to each layer and each neuron. Layers may have different depths.
+neuron **network;
+
+int main(int argc, char **argv){
+    unsigned i, j, k;
+    unsigned node_count[] = {2, 3, 1, 4, 5, 3, 5, 2, 1}; // Gives me random node counts for each layer for testing with.
+
+    // test data.
+    int data[][3] = {
+        { -2, -1, 1},
+        { 25,  6, 0},
+        { 17,  4, 0},
+        {-15, -6, 1}
+    };
+
+    // malloc space for input, hidden, and output layers.
+    network = malloc(LAYERS * sizeof(neuron*));
+
+    // malloc space for nodes in each layer.
+    for(i = 0; i < LAYERS; i++){
+        network[i] = malloc(node_count[i] * sizeof(neuron));
+    }
+
+    // malloc space for weights in each node in each layer.
+    for(i = 1; i < LAYERS; i++){
+        for(j = 0; j < node_count[i]; j++){
+            network[i][j].weight = malloc(node_count[i - 1] * sizeof(double));
+        }
+    }
+
+    // initialise nodes.
+    for(i = 1; i < LAYERS; i++){
+        for(j = 0; j < node_count[i]; j++){
+            network[i][j].bias = 0.0;
+            network[i][j].output = 0.0;
+            for(k = 0; k < node_count[i - 1]; k++){
+                network[i][j].weight[k] = 1.0;
+            }
+        }
+    }
+
+    // load one data point into first layer.
+    for(i = 0; i < node_count[i]; i++){
+        network[0][i].output = data[0][i];
+    }
+
+    // feed forward.
+    for(i = 1; i < LAYERS; i++){
+        for(j = 0; j < node_count[i]; j++){
+            for(k = 0; k < node_count[i - 1]; k++){
+                network[i][j].output += network[i][j].weight[k] * network[i - 1][k].output;
+            }
+            network[i][j].output = sigmoid(network[i][j].output);
+        }
+    }
+
+    // display output to check.
+    for(j = 0; j < node_count[LAYERS - 2]; j++){
+        printf("output from node %u: %lf\n", j, network[LAYERS - 1][j].output);
+    }
+
+    // next steps, calculate the MSE, then backprop.
+
+    puts("beep.");
+}
+
+
+
 
 double sigmoid(double x){
     return 1.0 / (1.0 + exp(-x));
@@ -58,99 +131,4 @@ double mse(double *true, double *pred, unsigned size){
     }
     return error / size;
 }
-
-void feedforward(double *x, neuron *node){
-    node->output = sigmoid(dot(INPUT_ROWS, x, node->weight) + node->bias);
-}
-
-// points to each layer and each neuron. Layers may have different depths.
-neuron **network;
-
-// points to dataset.
-double **input;
-
-// learning rate.
-double learn_rate;
-
-int main(int argc, char **argv){
-    unsigned i, j;
-
-    // malloc space for input.
-    input = malloc(INPUT_ROWS * sizeof(double*));
-    for(i = 0; i < INPUT_ROWS; i++){
-        input[i] = malloc(INPUT_COLS * sizeof(double));
-    }
-
-    // malloc space for hidden layers and output layer.
-    network = malloc((H_LAYERS + 1) * sizeof(neuron*));
-
-    // malloc space for nodes in first layer.
-    network[0] = malloc(L1_NODES * sizeof(neuron));
-
-    // malloc space for output nodes.
-    network[1] = malloc(OUTPUTS * sizeof(neuron));
-
-    // malloc space for weights in each node of first layer.
-    for(i = 0; i < L1_NODES; i++){
-        network[0][i].weight = malloc(INPUT_ROWS * sizeof(double));
-    }
-
-    // malloc space for weights in each node of output layer.
-    for(i = 0; i < OUTPUTS; i++){
-        network[1][i].weight = malloc(L1_NODES * sizeof(double));
-    }
-
-    // initialise weights array and biases in each node of first layer.
-    for(i = 0; i < L1_NODES; i++){
-        for(j = 0; j < INPUT_ROWS; j++){
-            network[0][i].weight[j] = 1.0;
-            network[0][i].bias      = 0.0;
-        }
-    }
-
-    // initialise weights array and biases in each node of output layer.
-    for(i = 0; i < OUTPUTS; i++){
-        for(j = 0; j < L1_NODES; j++){
-            network[1][i].weight[j] = 1.0;
-            network[1][i].bias      = 0.0;
-        }
-    }
-
-    // test data set.
-    input[0] = (double[2]) {-2,  -1};
-    input[1] = (double[2]) {25,   6};
-    input[2] = (double[2]) {17,   4};
-    input[3] = (double[2]) {-15, -6};
-
-    // push data through the network.
-    for(j = 0; j < 4; j++){
-        // push data through first layer.
-        for(i = 0; i < L1_NODES; i++){
-            feedforward(input[j], &network[0][i]);
-        }
-
-        // make an array of the outputs from the first layer.
-        double *layer_out = malloc(L1_NODES * sizeof(double));
-
-        // copy outputs from first layer into layer_out.
-        for(i = 0; i < L1_NODES; i++){
-            layer_out[i] = network[0][i].output;
-        }
-
-        // feedforward first layer to output layer.
-        for(i = 0; i < OUTPUTS; i++){
-            feedforward(layer_out, &network[1][i]);
-        }
-
-        // now output neuron should contain its output value.
-        printf("input: %7.3lf %7.3lf | output %7.3lf\n", input[j][0], input[j][1], network[1][0]);
-    }
-
-    // next step: back prop.
-
-    puts("beep.");
-}
-
-
-
 
