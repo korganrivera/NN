@@ -3,11 +3,23 @@
  * I'll be able to choose number of layers and number of nodes in each layer
  * later, but while I'm coding, I'll assume the network looks like this.
 
-          N1
-    X1
-          N2    out
-    X2
-          N3
+                    N[1][0].bias
+                    N[1][0].sum
+                    N[1][0].sig
+N[0][0].bias        N[1][0].weight[0]
+N[0][0].sum         N[1][0].weight[1]
+N[0][0].sig                              N[2][0].bias
+N[0][0].weight[]    N[1][1].bias         N[2][0].sum
+                    N[1][1].sum          N[2][0].sig          L()
+N[0][0].bias        N[1][1].sig          N[2][0].weight[0]
+N[0][0].sum         N[1][1].weight[0]    N[2][0].weight[1]
+N[0][0].sig         N[1][1].weight[1]    N[2][0].weight[2]
+N[0][0].weight[]
+                    N[1][2].bias
+                    N[1][2].sum
+                    N[1][2].sig
+                    N[1][2].weight[0]
+                    N[1][2].weight[1]
 
  * Fri Mar 15 16:59:21 CDT 2019
  *
