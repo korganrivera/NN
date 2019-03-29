@@ -130,37 +130,42 @@ int main(int argc, char **argv){
 
             // dL / d(y_pred).
             dL_dypredw[j] = -2 * error[j];
-
-            // d_ypred / d_w, where w is weights attached to this neuron in last layer.
-            for(i = 0; i < node_count[LAYERS - 2]; i++){
-                dL_dypredw[i] = network[LAYERS - 2][i].sigmoid * deriv_sigmoid(network[LAYERS -1][j].sum);
-            }
-
-            // d_ypred / d_bias
-            double dypred_d_bias = deriv_sigmoid(network[LAYERS -1][j].sum);
-
-            
-
         }
 
-
-        // d(y_pred) / dw[], where w[] is all the weights attached to that neuron.
-        double dypred_dw[node_count[LAYERS - 1]][node_count[LAYERS - 2]];
-
-
-        // calc partial derivatives. dL/dYpred = -2 * (y_true - y_pred)
-        for(j = 0; j < node_count[LAYERS - 1]; j++){
-           // dL_dypred[j] = -2 * error[j];
-        }
-
-        // dh[] / dw[].
-        for(i = 0; i < node_count[LAYERS - 2]; i++){
-            for(j = 0; j < node_count[LAYERS - 3]; j++){
-                dh_dw[i][j] = network[LAYERS - 3][j].sigmoid * deriv_sigmoid( network[LAYERS - 2][i].sum);
-            }
-        }
-
-        // This is getting ridiculous. I'm going to finish this when I've drawn it all out.
+        /* So, here's the deal with the partial derivatives.
+         * (after about 6 hours of studying the problem...)
+         * Given a weight or bias, I think I have an algorithm that will give
+         * me the correct partial derivatives to calculate in the right order.
+         * If the given weight is n[i][j].weight[k], then I need to calc
+         *
+         *    d n[p][q].sum
+         * -------------------   where p = i, i+1, i+2, ... I
+         * d n[i][j].weight[k]         q = 0, 1, 2,     ... J
+         *
+         *  and
+         *
+         *  d n[p][q].sigmoid
+         * -------------------   where p = i, i+1, i+2, ... I
+         * d n[i][j].weight[k]         q = 0, 1, 2,     ... J
+         *
+         * for all weights. And obviously also
+         *
+         *   d n[p][q].sum       where p = i, i+1, i+2, ... I
+         * ------------------          q = 0, 1, 2,     ... J
+         *   d n[i][j].bias
+         *
+         *  d n[p][q].sigmoid
+         * -------------------   where p = i, i+1, i+2, ... I
+         *   d n[i][j].bias            q = 0, 1, 2,     ... J
+         *
+         *  for all biases.
+         *
+         * When I include the sigmoid_deriv() function, then I have all the
+         * parts I need to calculate all the partial derivatives for all the
+         * weights and biases. Debugging this will be a fucking nightmare, so
+         * get it right the first time!
+         *
+         * */
 
 
     } // each data point processed.
