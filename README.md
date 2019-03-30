@@ -28,7 +28,7 @@ Here's an example of a 2-3-1 network.
 
 A neuron in the first column is actually used as the input node. It makes the code simpler this way. A neuron will have as many weights as there are nodes in the previous layer. L() is the loss or error function.
 
-To calculate the partial derivative of some given weight n[i][j].weight[k], then I need to calc
+To calculate the partial derivative with respect to some given weight n[i][j].weight[k], then I need to calc
 
              d n[p][q].sum
           -------------------   where p = i, i+1, i+2, ... I

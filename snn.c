@@ -177,15 +177,24 @@ int main(int argc, char **argv){
          * weights and biases. Debugging this will be a fucking nightmare, so
          * get it right the first time!
          *
+         *
+         * Fri Mar 29 21:30:11 CDT 2019
+         * Pretty excited! After about a million hours, I think I've come up
+         * with the simplest way to calculate all those partial derivatives.
+         * I'm going to add two fields to my neurons, and they are dsig_dsum
+         * and dsum_dw. Starting at the layer that the weight in question is, I
+         * calculate those values for each neuron in that layer. Then I repeat
+         * for the layers ahead of it until I reach the last neurons. That
+         * gives me dypred_dw. I use that to calculate dL_dypred, which is
+         * easy.  And that's all there is too it! Isn't that insane!? The
+         * entire nest of partial derivatives collapses to a super simple
+         * algorithm!
          * */
-
 
     } // each data point processed.
 
     puts("beep.");
 }
-
-
 
 
 double sigmoid(double x){
