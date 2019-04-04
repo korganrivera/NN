@@ -46,6 +46,9 @@ typedef struct{
     double bias;
     double sum;
     double sigmoid;
+    double dsig_dsum;
+    double dsum_dw;
+    double *w_adjustment;
 }neuron;
 
 // points to each layer and each neuron. Layers may have different depths.
@@ -53,14 +56,14 @@ neuron **network;
 
 int main(int argc, char **argv){
     unsigned i, j, k;
-    unsigned node_count[] = {2, 3, 1, 4, 5, 3, 5, 2, 1}; // Gives me random node counts for each layer for testing with.
+    unsigned node_count[] = {2, 3, 2, 4, 5, 3, 5, 2, 1}; // Gives me random node counts for each layer for testing with.
 
     // test data.
-    int data[][3] = {
-        { -2, -1, 1},
-        { 25,  6, 0},
-        { 17,  4, 0},
-        {-15, -6, 1}
+    int data[][4] = {
+        { -2, -1, 1, 1},
+        { 25,  6, 0, 1},
+        { 17,  4, 0, 0},
+        {-15, -6, 1, 0}
     };
 
     // malloc space for input, hidden, and output layers.
@@ -71,18 +74,19 @@ int main(int argc, char **argv){
         network[i] = malloc(node_count[i] * sizeof(neuron));
     }
 
-    // malloc space for weights in each node in each layer.
+    // malloc space for weights and there adjustments in each node in each layer.
     for(i = 1; i < LAYERS; i++){
         for(j = 0; j < node_count[i]; j++){
             network[i][j].weight = malloc(node_count[i - 1] * sizeof(double));
+            network[i][j].w_adjustment = malloc(node_count[i - 1] * sizeof(double));
         }
     }
 
-    // malloc space for squared error.
-    double *error = malloc(node_count[LAYERS - 1] * sizeof(double));
+    // malloc space for squared error vector.
+    double *error_vector= malloc(node_count[LAYERS - 1] * sizeof(double));
 
     // malloc space for y_pred.
-    double *y_pred = malloc(node_count[LAYERS - 1] * sizeof(double));
+    double *error_sq_vector = malloc(node_count[LAYERS - 1] * sizeof(double));
 
     // initialise nodes.
     for(i = 1; i < LAYERS; i++){
@@ -96,9 +100,10 @@ int main(int argc, char **argv){
         }
     }
 
-    // initialise squared error vector.
+    // initialise vectors.
     for(j = 0; j < node_count[LAYERS - 1]; j++){
-        error[j] = 0.0;
+        error_vector[j] = 0.0;
+        error_sq_vector[j] = 0.0;
     }
 
     // process each data point.
@@ -125,6 +130,21 @@ int main(int argc, char **argv){
         // backprop: calc all partial derivatives for each output.
         // This is spaghetti.
 
+        // calc error_vector, error_sq_vector, and total_error.
+        double total_error = 0.0;
+        for(j = 0; j < node_count[LAYERS - 1]; j++){
+            error_vector[j] = data[data_index][node_count[0] + j] - network[LAYERS - 1][j].sigmoid;
+            error_sq_vector[j] = error_vector[j] * error_vector[j];
+            printf("sq_error: %lf\n", error_sq_vector[j]);
+            total_error += error_sq_vector[j];
+        }
+        total_error /= node_count[LAYERS - 1];
+        printf("total_error: %lf\n", total_error);
+
+        // calculate d(total_error) / d(w)
+        // dt/dw = ...
+
+
 
         double *dL_dypredw = malloc(node_count[LAYERS - 2] * sizeof(double));
         double **dh_dw = malloc(node_count[LAYERS - 2] * sizeof(double));
@@ -132,17 +152,6 @@ int main(int argc, char **argv){
             dh_dw[i] = malloc(node_count[LAYERS - 3] * sizeof(double));
         }
 
-
-        // put outputs into y_pred. calc error between true and pred.
-        for(j = 0; j < node_count[LAYERS - 1]; j++){
-            y_pred[j] = network[LAYERS - 1][j].sigmoid;
-            error[j] = data[data_index][2 + j] - y_pred[j];
-            error[j] *= error[j];
-            printf("sq_error: %lf\n", error[j]);
-
-            // dL / d(y_pred).
-            dL_dypredw[j] = -2 * error[j];
-        }
 
         /* So, here's the deal with the partial derivatives.
          * (after about 6 hours of studying the problem...)
