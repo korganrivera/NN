@@ -4,7 +4,7 @@
 #include <math.h>
 
 #define LR 0.1
-#define EPOCHS 100
+#define EPOCHS 1000
 
 typedef struct{
     double b;
@@ -236,18 +236,32 @@ int main(int argc, char **argv){
         }
     }
     puts("beep end");
+    // try it out.
+    // Emily
+    network[0][0].sig = -7;
+    network[0][1].sig = -3;
+    feed_forward(network, node_count);
+    printf("Emily's score: %lf\n", network[2][0].sig);
+
+    // Frank
+    network[0][0].sig = 20;
+    network[0][1].sig = 2;
+    feed_forward(network, node_count);
+    printf("Frank's score: %lf\n", network[2][0].sig);
 }
 
 void feed_forward(neuron **n, unsigned *nodes){
 unsigned i, j, k;
-
+ //   puts("");
     for(i = 1; i < 3; i++){
         for(j = 0; j < nodes[i]; j++){
+            n[i][j].sum = 0;
             for(k = 0; k < nodes[i - 1]; k++){
                 n[i][j].sum += n[i][j].w[k] * n[i - 1][k].sig;
             }
             n[i][j].sum += n[i][j].b;
             n[i][j].sig = sigmoid(n[i][j].sum);
+//            printf("n[%u][%u]: sum = %9lf sig = %9lf\n", i, j, n[i][j].sum, n[i][j].sig);
 
             // calc dsig_dsum while we're here even though it's not really part of feed forwarding.
             n[i][j].dsig_dsum = n[i][j].sig * (1 - n[i][j].sig);
