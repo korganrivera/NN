@@ -125,34 +125,59 @@ int main(int argc, char **argv){
             network[0][i].sigmoid = data[data_index][i];
         }
 
-        // feed forward and do some backprop partial derivatives.
+        // feed forward.
         for(i = 1; i < LAYERS; i++){
             for(j = 0; j < node_count[i]; j++){
                 for(k = 0; k < node_count[i - 1]; k++){
                     network[i][j].sum += network[i][j].weight[k] * network[i - 1][k].sigmoid;
                 }
                 network[i][j].sum += network[i][j].bias;
-
                 network[i][j].sigmoid = sigmoid(network[i][j].sum);
+            }
+        }
+//***************do this for every weigh and bias*************************
+        // calculate partial derivatives for back propagation.
+        for(i = 1; i < LAYERS; i++){
+            for(j = 0; j < node_count[i]; j++){
+
+                // calculate sum of node.
+                network[i][j].sum = 0;
+                for(k = 0; k < node_count[i - 1]; k++){
+                    network[i][j].sum += network[i][j].weight[k] * network[i - 1][k].sigmoid;
+                }
+                network[i][j].sum += network[i][j].bias;
+
+                // calculate sigmoid of node.
+                network[i][j].sigmoid = sigmoid(network[i][j].sum);
+
+                // calcalate dsig_dsum of node.
                 network[i][j].dsig_dsum = deriv_sigmoid(network[i][j].sum);
+
+                // calculate dsum_dw for node.
                 if(i == 1){
-                    if(j == 0)
+                    if(j == 0){
                         network[i][j].dsum_dw = network[0][0].sigmoid;
-                    else
+                    }
+                    else{
                         network[i][j].dsum_dw = 0;
+                    }
                 }
                 else{
-                    network[i][j].dsum_dw = network[i][j].weight[0] * network[i - 1][0].dsig_dw + network[i][j].weight[1] * network[i - 1][1].dsig_dw;
+                   network[i][j].dsum_dw = 0;
+                   for(k = 0; k < node_count[i - 1]; k++){
+                       network[i][j].dsum_dw += network[i][j].weight[k] * network[i - 1][k].dsig_dw;
+                   }
                 }
 
+                // calculate dsig_dw for node.
                 network[i][j].dsig_dw = network[i][j].dsig_dsum * network[i][j].dsum_dw;
 
+                // print to check.
                 printf("network[%u][%u].sum = %lf\n", i, j, network[i][j].sum);
                 printf("network[%u][%u].sigmoid = %lf\n", i, j, network[i][j].sigmoid);
                 printf("network[%u][%u].dsig_dsum = %lf\n", i, j, network[i][j].dsig_dsum);
                 printf("network[%u][%u].dsum_dw = %lf\n", i, j, network[i][j].dsum_dw);
                 printf("network[%u][%u].dsig_dw = %lf\n", i, j, network[i][j].dsig_dw);
-
             }
         }
 
@@ -182,6 +207,7 @@ int main(int argc, char **argv){
 
         printf("subtracting %lf from w[0]\n", LR * dLdw);
 
+//****************************************
     } // each data point processed.
 
     puts("beep.");
