@@ -1,2 +1,2 @@
-nn_dumb: nn_dumb.c
-	gcc -o nn_dumb nn_dumb.c -lm
+nn: nn.c
+	gcc -o nn nn.c -lm

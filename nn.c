@@ -39,6 +39,7 @@ int main(int argc, char **argv){
         {-15, -6, 1}
     };
 
+    printf("creating network...");
     // malloc space for input, hidden, and output layers.
     network = malloc(3 * sizeof(neuron*));
 
@@ -54,7 +55,7 @@ int main(int argc, char **argv){
             network[i][j].w_adjustment = malloc(node_count[i - 1] * sizeof(double));
         }
     }
-
+    printf("done.\ninitialising...");
     // initialise weights and biases.
     for(i = 1; i < 3; i++){
         for(j = 0; j < node_count[i]; j++){
@@ -65,6 +66,7 @@ int main(int argc, char **argv){
         }
     }
 
+    printf("done\ntraining...");
     for(unsigned e = 0; e < EPOCHS; e++){
         for(unsigned d = 0; d < 4; d++){
             // load data.
@@ -78,7 +80,6 @@ int main(int argc, char **argv){
             double error   = diff * diff;
             double dEdsig  = -2.0 * diff;
 
-            printf("error = %lf\n", error);
             // back prop the stupid way.
             // w100.------------------------------------------------------------
             network[1][0].dsum_dw = network[0][0].sig;
@@ -170,85 +171,125 @@ int main(int argc, char **argv){
             // set w201's adjustment.
             network[2][0].w_adjustment[1] = LR * dEdw201;
 
+            // back propagate for the biases.
+            for(i = 1; i < 3; i++){
+                for(j = 0; j < node_count[i]; j++){
+
+                    // calc dsum_db and dsig_db.
+                    for(unsigned a = i; a < 3; a++){
+                        for(unsigned b = 0; b < node_count[a]; b++){
+                            if(a > i){
+                                // network[a][b].dsum_db = network[a][b].w[0] * network[a - 1][0].dsig_db + network[a][b].w[1] * network[a - 1][1].dsig_db;
+                                network[a][b].dsum_db = 0;
+                                for(unsigned c = 0; c < node_count[a - 1]; c++){
+                                    network[a][b].dsum_db += network[a][b].w[c] * network[a - 1][c].dsig_db;
+                                }
+                            }
+
+                            else if(a == i && b == j)
+                                network[a][b].dsum_db = 1;
+                            else
+                                network[a][b].dsum_db = 0;
+
+                            network[a][b].dsig_db = network[a][b].dsig_dsum * network[a][b].dsum_db;
+                        }
+                    }
+
+                    // calc bias adjustment.
+                    network[i][j].b_adjustment = LR * dEdsig * network[2][0].dsig_db;
+                }
+            }
+
             // do same for biases
             // b10.------------------------------------------------------------
-            network[1][0].dsum_db = 1;
-            network[1][0].dsig_db = network[1][0].dsig_dsum * network[1][0].dsum_db;
-
-            network[1][1].dsum_db = 0;
-            network[1][1].dsig_db = network[1][1].dsig_dsum * network[1][1].dsum_db;
-
-            network[2][0].dsum_db = network[2][0].w[0] * network[1][0].dsig_db + network[2][0].w[1] * network[1][1].dsig_db;
-            network[2][0].dsig_db = network[2][0].dsig_dsum * network[2][0].dsum_db;
-
-            double dEdb10 = dEdsig * network[2][0].dsig_db;
-
-            // set b10's adjustment.
-            network[1][0].b_adjustment = LR * dEdb10;
-
-            // b11.------------------------------------------------------------
-            network[1][0].dsum_db = 0;
-            network[1][0].dsig_db = network[1][0].dsig_dsum * network[1][0].dsum_db;
-
-            network[1][1].dsum_db = 1;
-            network[1][1].dsig_db = network[1][1].dsig_dsum * network[1][1].dsum_db;
-
-            network[2][0].dsum_db = network[2][0].w[0] * network[1][0].dsig_db + network[2][0].w[1] * network[1][1].dsig_db;
-            network[2][0].dsig_db = network[2][0].dsig_dsum * network[2][0].dsum_db;
-
-            double dEdb11 = dEdsig * network[2][0].dsig_db;
-
-            // set b11's adjustment.
-            network[1][1].b_adjustment = LR * dEdb11;
-
-            // b20.------------------------------------------------------------
-            network[1][0].dsum_db = 0;
-            network[1][0].dsig_db = network[1][0].dsig_dsum * network[1][0].dsum_db;
-
-            network[1][1].dsum_db = 0;
-            network[1][1].dsig_db = network[1][1].dsig_dsum * network[1][1].dsum_db;
-
-            network[2][0].dsum_db = 1;
-            network[2][0].dsig_db = network[2][0].dsig_dsum * network[2][0].dsum_db;
-
-            double dEdb20 = dEdsig * network[2][0].dsig_db;
-
-            // set b20's adjustment.
-            network[2][0].b_adjustment = LR * dEdb20;
+//            network[1][0].dsum_db = 1;
+//            network[1][0].dsig_db = network[1][0].dsig_dsum * network[1][0].dsum_db;
+//
+//            network[1][1].dsum_db = 0;
+//            network[1][1].dsig_db = network[1][1].dsig_dsum * network[1][1].dsum_db;
+//
+//            network[2][0].dsum_db = network[2][0].w[0] * network[1][0].dsig_db + network[2][0].w[1] * network[1][1].dsig_db;
+//            network[2][0].dsig_db = network[2][0].dsig_dsum * network[2][0].dsum_db;
+//
+//            double dEdb10 = dEdsig * network[2][0].dsig_db;
+//
+//            // set b10's adjustment.
+//            network[1][0].b_adjustment = LR * dEdb10;
+//
+//            // b11.------------------------------------------------------------
+//            network[1][0].dsum_db = 0;
+//            network[1][0].dsig_db = network[1][0].dsig_dsum * network[1][0].dsum_db;
+//
+//            network[1][1].dsum_db = 1;
+//            network[1][1].dsig_db = network[1][1].dsig_dsum * network[1][1].dsum_db;
+//
+//            network[2][0].dsum_db = network[2][0].w[0] * network[1][0].dsig_db + network[2][0].w[1] * network[1][1].dsig_db;
+//            network[2][0].dsig_db = network[2][0].dsig_dsum * network[2][0].dsum_db;
+//
+//            double dEdb11 = dEdsig * network[2][0].dsig_db;
+//
+//            // set b11's adjustment.
+//            network[1][1].b_adjustment = LR * dEdb11;
+//
+//            // b20.------------------------------------------------------------
+//            network[1][0].dsum_db = 0;
+//            network[1][0].dsig_db = network[1][0].dsig_dsum * network[1][0].dsum_db;
+//
+//            network[1][1].dsum_db = 0;
+//            network[1][1].dsig_db = network[1][1].dsig_dsum * network[1][1].dsum_db;
+//
+//            network[2][0].dsum_db = 1;
+//            network[2][0].dsig_db = network[2][0].dsig_dsum * network[2][0].dsum_db;
+//
+//            double dEdb20 = dEdsig * network[2][0].dsig_db;
+//
+//            // set b20's adjustment.
+//            network[2][0].b_adjustment = LR * dEdb20;
 
             // adjust all the weights.
-            network[1][0].w[0] -= network[1][0].w_adjustment[0];
-            network[1][0].w[1] -= network[1][0].w_adjustment[1];
-            network[1][1].w[0] -= network[1][1].w_adjustment[0];
-            network[1][1].w[1] -= network[1][1].w_adjustment[1];
-            network[2][0].w[0] -= network[2][0].w_adjustment[0];
-            network[2][0].w[1] -= network[2][0].w_adjustment[1];
+            for(i = 1; i < 3; i++)
+                for(j = 0; j < node_count[i]; j++)
+                    for(k = 0; k < node_count[i - 1]; k++)
+                        network[i][j].w[k] -= network[i][j].w_adjustment[k];
 
             // adjust all the biases.
-            network[1][0].b -= network[1][0].b_adjustment;
-            network[1][1].b -= network[1][1].b_adjustment;
-            network[2][0].b -= network[2][0].b_adjustment;
+            for(i = 1; i < 3; i++)
+                for(j = 0; j < node_count[i]; j++)
+                    network[i][j].b -= network[i][j].b_adjustment;
         }
     }
-    puts("beep");
+    puts("done.\nTesting:\n");
     // try it out.
     // Emily
-    network[0][0].sig = -7;
-    network[0][1].sig = -3;
+    int weight, height;
+    weight = 128;
+    height = 63;
+    network[0][0].sig = weight - 135;
+    network[0][1].sig = height - 66;
     feed_forward(network, node_count);
-    printf("Emily's score: %lf\n", network[2][0].sig);
+    printf("Emily:\nweight: %u lb\nheight: %u \"\npredicted gender: ", weight, height);
+    if(network[2][0].sig >= 0.5)
+        puts("female");
+    else
+        puts("male");
+    printf("(score = %lf)\n\n", network[2][0].sig);
 
     // Frank
-    network[0][0].sig = 20;
-    network[0][1].sig = 2;
+    weight = 155;
+    height = 68;
+    network[0][0].sig = weight - 135;
+    network[0][1].sig = height - 66;
     feed_forward(network, node_count);
-    printf("Frank's score: %lf\n", network[2][0].sig);
-
+    printf("Frank:\nweight: %u lb\nheight: %u \"\npredicted gender: ", weight, height);
+    if(network[2][0].sig >= 0.5)
+        puts("female");
+    else
+        puts("male");
+    printf("(score = %lf)\n", network[2][0].sig);
 }
 
 void feed_forward(neuron **n, unsigned *nodes){
 unsigned i, j, k;
- //   puts("");
     for(i = 1; i < 3; i++){
         for(j = 0; j < nodes[i]; j++){
             n[i][j].sum = 0;
