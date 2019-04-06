@@ -80,96 +80,124 @@ int main(int argc, char **argv){
             double error   = diff * diff;
             double dEdsig  = -2.0 * diff;
 
-            // back prop the stupid way.
-            // w100.------------------------------------------------------------
-            network[1][0].dsum_dw = network[0][0].sig;
-            network[1][0].dsig_dw = network[1][0].dsig_dsum * network[1][0].dsum_dw;
+//            // back prop the stupid way.
+//            // w100.------------------------------------------------------------
+//            network[1][0].dsum_dw = network[0][0].sig;
+//            network[1][0].dsig_dw = network[1][0].dsig_dsum * network[1][0].dsum_dw;
+//
+//            network[1][1].dsum_dw = 0;
+//            network[1][1].dsig_dw = network[1][1].dsig_dsum * network[1][1].dsum_dw;
+//
+//            network[2][0].dsum_dw = network[2][0].w[0] * network[1][0].dsig_dw + network[2][0].w[1] * network[1][1].dsig_dw;
+//            network[2][0].dsig_dw = network[2][0].dsig_dsum * network[2][0].dsum_dw;
+//
+//            double dEdw100 = dEdsig * network[2][0].dsig_dw;
+//
+//            // set w100's adjustment.
+//            network[1][0].w_adjustment[0] = LR * dEdw100;
+//
+//            // w101.------------------------------------------------------------
+//            network[1][0].dsum_dw = network[0][1].sig;
+//            network[1][0].dsig_dw = network[1][0].dsig_dsum * network[1][0].dsum_dw;
+//
+//            network[1][1].dsum_dw = 0;
+//            network[1][1].dsig_dw = network[1][1].dsig_dsum * network[1][1].dsum_dw;
+//
+//            network[2][0].dsum_dw = network[2][0].w[0] * network[1][0].dsig_dw + network[2][0].w[1] * network[1][1].dsig_dw;
+//            network[2][0].dsig_dw = network[2][0].dsig_dsum * network[2][0].dsum_dw;
+//
+//            double dEdw101 = dEdsig * network[2][0].dsig_dw;
+//
+//            // set w101's adjustment.
+//            network[1][0].w_adjustment[1] = LR * dEdw101;
+//
+//            // w110.------------------------------------------------------------
+//            network[1][0].dsum_dw = 0;
+//            network[1][0].dsig_dw = network[1][0].dsig_dsum * network[1][0].dsum_dw;
+//
+//            network[1][1].dsum_dw = network[0][0].sig;
+//            network[1][1].dsig_dw = network[1][1].dsig_dsum * network[1][1].dsum_dw;
+//
+//            network[2][0].dsum_dw = network[2][0].w[0] * network[1][0].dsig_dw + network[2][0].w[1] * network[1][1].dsig_dw;
+//            network[2][0].dsig_dw = network[2][0].dsig_dsum * network[2][0].dsum_dw;
+//
+//            double dEdw110 = dEdsig * network[2][0].dsig_dw;
+//
+//            // set w100's adjustment.
+//            network[1][1].w_adjustment[0] = LR * dEdw110;
+//
+//            // w111.------------------------------------------------------------
+//            network[1][0].dsum_dw = 0;
+//            network[1][0].dsig_dw = network[1][0].dsig_dsum * network[1][0].dsum_dw;
+//
+//            network[1][1].dsum_dw = network[0][1].sig;
+//            network[1][1].dsig_dw = network[1][1].dsig_dsum * network[1][1].dsum_dw;
+//
+//            network[2][0].dsum_dw = network[2][0].w[0] * network[1][0].dsig_dw + network[2][0].w[1] * network[1][1].dsig_dw;
+//            network[2][0].dsig_dw = network[2][0].dsig_dsum * network[2][0].dsum_dw;
+//
+//            double dEdw111 = dEdsig * network[2][0].dsig_dw;
+//
+//            // set w111's adjustment.
+//            network[1][1].w_adjustment[1] = LR * dEdw111;
+//
+//            // w200.------------------------------------------------------------
+//            network[1][0].dsum_dw = 0;
+//            network[1][0].dsig_dw = network[1][0].dsig_dsum * network[1][0].dsum_dw;
+//
+//            network[1][1].dsum_dw = 0;
+//            network[1][1].dsig_dw = network[1][1].dsig_dsum * network[1][1].dsum_dw;
+//
+//            network[2][0].dsum_dw = network[1][0].sig;
+//            network[2][0].dsig_dw = network[2][0].dsig_dsum * network[2][0].dsum_dw;
+//
+//            double dEdw200 = dEdsig * network[2][0].dsig_dw;
+//
+//            // set w200's adjustment.
+//            network[2][0].w_adjustment[0] = LR * dEdw200;
+//
+//            // w201.------------------------------------------------------------
+//            network[1][0].dsum_dw = 0;
+//            network[1][0].dsig_dw = network[1][0].dsig_dsum * network[1][0].dsum_dw;
+//
+//            network[1][1].dsum_dw = 0;
+//            network[1][1].dsig_dw = network[1][1].dsig_dsum * network[1][1].dsum_dw;
+//
+//            network[2][0].dsum_dw = network[1][1].sig;
+//            network[2][0].dsig_dw = network[2][0].dsig_dsum * network[2][0].dsum_dw;
+//
+//            double dEdw201 = dEdsig * network[2][0].dsig_dw;
+//
+//            // set w201's adjustment.
+//            network[2][0].w_adjustment[1] = LR * dEdw201;
 
-            network[1][1].dsum_dw = 0;
-            network[1][1].dsig_dw = network[1][1].dsig_dsum * network[1][1].dsum_dw;
 
-            network[2][0].dsum_dw = network[2][0].w[0] * network[1][0].dsig_dw + network[2][0].w[1] * network[1][1].dsig_dw;
-            network[2][0].dsig_dw = network[2][0].dsig_dsum * network[2][0].dsum_dw;
 
-            double dEdw100 = dEdsig * network[2][0].dsig_dw;
+            // back propagate for the weights.
+            for(i = 1; i < 3; i++){
+                for(j = 0; j < node_count[i]; j++){
+                    for(k = 0; k < node_count[i - 1]; k++){
 
-            // set w100's adjustment.
-            network[1][0].w_adjustment[0] = LR * dEdw100;
+                        // calc dsum_dw and dsig_dw.
+                        for(unsigned a = i; a < 3; a++){
+                            for(unsigned b = 0; b < node_count[a]; b++){
 
-            // w101.------------------------------------------------------------
-            network[1][0].dsum_dw = network[0][1].sig;
-            network[1][0].dsig_dw = network[1][0].dsig_dsum * network[1][0].dsum_dw;
+                                if(a > i)
+                                    network[a][b].dsum_dw = network[a][b].w[0] * network[a - 1][0].dsig_dw + network[a][b].w[1] * network[a - 1][1].dsig_dw;
+                                else if(a == i && b == j)
+                                    network[a][b].dsum_dw = network[a - 1][k].sig;
+                                else
+                                    network[a][b].dsum_dw = 0;
 
-            network[1][1].dsum_dw = 0;
-            network[1][1].dsig_dw = network[1][1].dsig_dsum * network[1][1].dsum_dw;
+                                network[a][b].dsig_dw = network[a][b].dsig_dsum * network[2][0].dsum_dw;
+                            }
+                        }
 
-            network[2][0].dsum_dw = network[2][0].w[0] * network[1][0].dsig_dw + network[2][0].w[1] * network[1][1].dsig_dw;
-            network[2][0].dsig_dw = network[2][0].dsig_dsum * network[2][0].dsum_dw;
-
-            double dEdw101 = dEdsig * network[2][0].dsig_dw;
-
-            // set w101's adjustment.
-            network[1][0].w_adjustment[1] = LR * dEdw101;
-
-            // w110.------------------------------------------------------------
-            network[1][0].dsum_dw = 0;
-            network[1][0].dsig_dw = network[1][0].dsig_dsum * network[1][0].dsum_dw;
-
-            network[1][1].dsum_dw = network[0][0].sig;
-            network[1][1].dsig_dw = network[1][1].dsig_dsum * network[1][1].dsum_dw;
-
-            network[2][0].dsum_dw = network[2][0].w[0] * network[1][0].dsig_dw + network[2][0].w[1] * network[1][1].dsig_dw;
-            network[2][0].dsig_dw = network[2][0].dsig_dsum * network[2][0].dsum_dw;
-
-            double dEdw110 = dEdsig * network[2][0].dsig_dw;
-
-            // set w100's adjustment.
-            network[1][1].w_adjustment[0] = LR * dEdw110;
-
-            // w111.------------------------------------------------------------
-            network[1][0].dsum_dw = 0;
-            network[1][0].dsig_dw = network[1][0].dsig_dsum * network[1][0].dsum_dw;
-
-            network[1][1].dsum_dw = network[0][1].sig;
-            network[1][1].dsig_dw = network[1][1].dsig_dsum * network[1][1].dsum_dw;
-
-            network[2][0].dsum_dw = network[2][0].w[0] * network[1][0].dsig_dw + network[2][0].w[1] * network[1][1].dsig_dw;
-            network[2][0].dsig_dw = network[2][0].dsig_dsum * network[2][0].dsum_dw;
-
-            double dEdw111 = dEdsig * network[2][0].dsig_dw;
-
-            // set w111's adjustment.
-            network[1][1].w_adjustment[1] = LR * dEdw111;
-
-            // w200.------------------------------------------------------------
-            network[1][0].dsum_dw = 0;
-            network[1][0].dsig_dw = network[1][0].dsig_dsum * network[1][0].dsum_dw;
-
-            network[1][1].dsum_dw = 0;
-            network[1][1].dsig_dw = network[1][1].dsig_dsum * network[1][1].dsum_dw;
-
-            network[2][0].dsum_dw = network[1][0].sig;
-            network[2][0].dsig_dw = network[2][0].dsig_dsum * network[2][0].dsum_dw;
-
-            double dEdw200 = dEdsig * network[2][0].dsig_dw;
-
-            // set w200's adjustment.
-            network[2][0].w_adjustment[0] = LR * dEdw200;
-
-            // w201.------------------------------------------------------------
-            network[1][0].dsum_dw = 0;
-            network[1][0].dsig_dw = network[1][0].dsig_dsum * network[1][0].dsum_dw;
-
-            network[1][1].dsum_dw = 0;
-            network[1][1].dsig_dw = network[1][1].dsig_dsum * network[1][1].dsum_dw;
-
-            network[2][0].dsum_dw = network[1][1].sig;
-            network[2][0].dsig_dw = network[2][0].dsig_dsum * network[2][0].dsum_dw;
-
-            double dEdw201 = dEdsig * network[2][0].dsig_dw;
-
-            // set w201's adjustment.
-            network[2][0].w_adjustment[1] = LR * dEdw201;
+                        // calc weight adjustment.
+                        network[i][j].w_adjustment[k] = LR * dEdsig * network[2][0].dsig_dw;
+                    }
+                }
+            }
 
             // back propagate for the biases.
             for(i = 1; i < 3; i++){
