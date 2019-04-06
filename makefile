@@ -1,2 +1,2 @@
-snn: snn.c linear_algebra.c
-	gcc -o snn snn.c linear_algebra.c -lm
+nn_dumb: nn_dumb.c
+	gcc -o nn_dumb nn_dumb.c -lm

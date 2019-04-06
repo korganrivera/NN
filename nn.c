@@ -39,7 +39,6 @@ int main(int argc, char **argv){
         {-15, -6, 1}
     };
 
-    puts("beep start");
     // malloc space for input, hidden, and output layers.
     network = malloc(3 * sizeof(neuron*));
 
@@ -56,7 +55,6 @@ int main(int argc, char **argv){
         }
     }
 
-
     // initialise weights and biases.
     for(i = 1; i < 3; i++){
         for(j = 0; j < node_count[i]; j++){
@@ -66,9 +64,6 @@ int main(int argc, char **argv){
             network[i][j].b = 0.0;
         }
     }
-
-//    malloc_network(neuron **net, unsigned *nodes);
-//    init_network()neuron **net, unsigned *nodes;
 
     for(unsigned e = 0; e < EPOCHS; e++){
         for(unsigned d = 0; d < 4; d++){
@@ -235,7 +230,7 @@ int main(int argc, char **argv){
             network[2][0].b -= network[2][0].b_adjustment;
         }
     }
-    puts("beep end");
+    puts("beep");
     // try it out.
     // Emily
     network[0][0].sig = -7;
@@ -248,6 +243,7 @@ int main(int argc, char **argv){
     network[0][1].sig = 2;
     feed_forward(network, node_count);
     printf("Frank's score: %lf\n", network[2][0].sig);
+
 }
 
 void feed_forward(neuron **n, unsigned *nodes){
@@ -261,7 +257,6 @@ unsigned i, j, k;
             }
             n[i][j].sum += n[i][j].b;
             n[i][j].sig = sigmoid(n[i][j].sum);
-//            printf("n[%u][%u]: sum = %9lf sig = %9lf\n", i, j, n[i][j].sum, n[i][j].sig);
 
             // calc dsig_dsum while we're here even though it's not really part of feed forwarding.
             n[i][j].dsig_dsum = n[i][j].sig * (1 - n[i][j].sig);
