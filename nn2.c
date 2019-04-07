@@ -4,7 +4,8 @@
 #include <math.h>
 
 #define LR 0.1
-#define EPOCHS 1000
+#define EPOCHS 2000
+#define LAYERS 4
 
 typedef struct{
     double b;
@@ -29,7 +30,7 @@ void feed_forward(neuron **n, unsigned *nodes);
 int main(int argc, char **argv){
     neuron **network;
     unsigned i, j, k;
-    unsigned node_count[] = {2, 2, 1};
+    unsigned node_count[] = {2, 2, 3, 1};
 
     // test data.
     int data[][3] = {
@@ -39,25 +40,32 @@ int main(int argc, char **argv){
         {-15, -6, 1}
     };
 
+    // check size of node_count[] in case I set LAYERS too high. This is for debugging.
+    unsigned size_nc = sizeof(node_count)/sizeof(unsigned);
+    if(size_nc < LAYERS){
+        puts("node_count is too short brah.");
+        exit(1);
+    }
+
     printf("creating network...");
     // malloc space for input, hidden, and output layers.
-    network = malloc(3 * sizeof(neuron*));
+    if((network = malloc(LAYERS * sizeof(neuron*))) == NULL) { puts("malloc failed"); exit(1); }
 
     // malloc space for nodes in each layer.
-    for(i = 0; i < 3; i++){
-        network[i] = malloc(node_count[i] * sizeof(neuron));
+    for(i = 0; i < LAYERS; i++){
+        if((network[i] = malloc(node_count[i] * sizeof(neuron))) == NULL) { puts("malloc failed"); exit(1); }
     }
 
     // malloc space for weights and there adjustments in each node in each layer.
-    for(i = 1; i < 3; i++){
+    for(i = 1; i < LAYERS; i++){
         for(j = 0; j < node_count[i]; j++){
-            network[i][j].w = malloc(node_count[i - 1] * sizeof(double));
-            network[i][j].w_adjustment = malloc(node_count[i - 1] * sizeof(double));
+            if((network[i][j].w = malloc(node_count[i - 1] * sizeof(double))) == NULL) { puts("malloc failed"); exit(1); }
+            if((network[i][j].w_adjustment = malloc(node_count[i - 1] * sizeof(double))) == NULL) { puts("malloc failed"); exit(1); }
         }
     }
     printf("done.\ninitialising...");
     // initialise weights and biases.
-    for(i = 1; i < 3; i++){
+    for(i = 1; i < LAYERS; i++){
         for(j = 0; j < node_count[i]; j++){
             for(k = 0; k < node_count[i - 1]; k++){
                 network[i][j].w[k] = 1.0;
@@ -70,23 +78,43 @@ int main(int argc, char **argv){
     for(unsigned e = 0; e < EPOCHS; e++){
         for(unsigned d = 0; d < 4; d++){
             // load data.
-            for(j = 0; j < node_count[j]; j++)
+            for(j = 0; j < node_count[0]; j++)
                 network[0][j].sig = data[d][j];
 
-            feed_forward(network, node_count);
+            // feed forward.
+            for(i = 1; i < LAYERS; i++){
+                for(j = 0; j < node_count[i]; j++){
+                    network[i][j].sum = 0;
+                    for(k = 0; k < node_count[i - 1]; k++){
+                        network[i][j].sum += network[i][j].w[k] * network[i - 1][k].sig;
+                    }
+                    network[i][j].sum += network[i][j].b;
+                    network[i][j].sig = sigmoid(network[i][j].sum);
+
+                    // calc dsig_dsum while we're here even though it's not really part of feed forwarding.
+                    network[i][j].dsig_dsum = network[i][j].sig * (1 - network[i][j].sig);
+                }
+            }
+
+            // feed_forward(network, node_count);
 
             // calculate error and dE/dsig.
-            double diff    = data[d][2] - network[2][0].sig;
+            double diff    = data[d][2] - network[LAYERS - 1][0].sig;
             double error   = diff * diff;
+
+            // if I've run at least 1000 epochs and the error is < 2%, bail.
+            if(error < 0.02 && e > 1000)
+                goto beep;
+
             double dEdsig  = -2.0 * diff;
-if(e % 100 == 0) printf("error = %lf\n", error);
+            if(e % 100 == 0) printf("error = %lf\n", error);
             // back propagate for the weights.
-            for(i = 1; i < 3; i++){
+            for(i = 1; i < LAYERS; i++){
                 for(j = 0; j < node_count[i]; j++){
                     for(k = 0; k < node_count[i - 1]; k++){
 
                         // calc dsum_dw and dsig_dw.
-                        for(unsigned a = i; a < 3; a++){
+                        for(unsigned a = i; a < LAYERS; a++){
                             for(unsigned b = 0; b < node_count[a]; b++){
 
                                 if(a > i){
@@ -100,22 +128,22 @@ if(e % 100 == 0) printf("error = %lf\n", error);
                                 else
                                     network[a][b].dsum_dw = 0;
 
-                                network[a][b].dsig_dw = network[a][b].dsig_dsum * network[2][0].dsum_dw;
+                                network[a][b].dsig_dw = network[a][b].dsig_dsum * network[LAYERS - 1][0].dsum_dw;
                             }
                         }
 
                         // calc weight adjustment.
-                        network[i][j].w_adjustment[k] = LR * dEdsig * network[2][0].dsig_dw;
+                        network[i][j].w_adjustment[k] = LR * dEdsig * network[LAYERS - 1][0].dsig_dw;
                     }
                 }
             }
 
             // back propagate for the biases.
-            for(i = 1; i < 3; i++){
+            for(i = 1; i < LAYERS; i++){
                 for(j = 0; j < node_count[i]; j++){
 
                     // calc dsum_db and dsig_db.
-                    for(unsigned a = i; a < 3; a++){
+                    for(unsigned a = i; a < LAYERS; a++){
                         for(unsigned b = 0; b < node_count[a]; b++){
                             if(a > i){
                                 network[a][b].dsum_db = 0;
@@ -134,23 +162,24 @@ if(e % 100 == 0) printf("error = %lf\n", error);
                     }
 
                     // calc bias adjustment.
-                    network[i][j].b_adjustment = LR * dEdsig * network[2][0].dsig_db;
+                    network[i][j].b_adjustment = LR * dEdsig * network[LAYERS - 1][0].dsig_db;
                 }
             }
 
             // adjust all the weights.
-            for(i = 1; i < 3; i++)
+            for(i = 1; i < LAYERS; i++)
                 for(j = 0; j < node_count[i]; j++)
                     for(k = 0; k < node_count[i - 1]; k++)
                         network[i][j].w[k] -= network[i][j].w_adjustment[k];
 
             // adjust all the biases.
-            for(i = 1; i < 3; i++)
+            for(i = 1; i < LAYERS; i++)
                 for(j = 0; j < node_count[i]; j++)
                     network[i][j].b -= network[i][j].b_adjustment;
         }
     }
 
+    beep:
     puts("done.\nTesting:\n");
     // try it out.
     // Emily
@@ -161,11 +190,8 @@ if(e % 100 == 0) printf("error = %lf\n", error);
     network[0][1].sig = height - 66;
     feed_forward(network, node_count);
     printf("Emily:\nweight: %u lb\nheight: %u \"\npredicted gender: ", weight, height);
-    if(network[2][0].sig >= 0.5)
-        puts("female");
-    else
-        puts("male");
-    printf("(score = %lf)\n\n", network[2][0].sig);
+    puts((network[LAYERS - 1][0].sig >= 0.5) ? "female" : "male");
+    printf("(score = %lf)\n", network[LAYERS - 1][0].sig);
 
     // Frank
     weight = 155;
@@ -174,16 +200,14 @@ if(e % 100 == 0) printf("error = %lf\n", error);
     network[0][1].sig = height - 66;
     feed_forward(network, node_count);
     printf("Frank:\nweight: %u lb\nheight: %u \"\npredicted gender: ", weight, height);
-    if(network[2][0].sig >= 0.5)
-        puts("female");
-    else
-        puts("male");
-    printf("(score = %lf)\n", network[2][0].sig);
+    puts((network[LAYERS - 1][0].sig >= 0.5) ? "female" : "male");
+    printf("(score = %lf)\n", network[LAYERS - 1][0].sig);
 }
 
 void feed_forward(neuron **n, unsigned *nodes){
 unsigned i, j, k;
-    for(i = 1; i < 3; i++){
+
+    for(i = 1; i < LAYERS; i++){
         for(j = 0; j < nodes[i]; j++){
             n[i][j].sum = 0;
             for(k = 0; k < nodes[i - 1]; k++){

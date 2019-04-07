@@ -1,0 +1,3375 @@
+==2783== Memcheck, a memory error detector
+==2783== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==2783== Using Valgrind-3.14.0-3a3000290b-20181009X and LibVEX; rerun with -h for copyright info
+==2783== Command: ./nn2
+==2783== 
+--2783-- Valgrind options:
+--2783--    -v
+--2783--    --leak-check=yes
+--2783-- Contents of /proc/version:
+--2783--   Linux version 5.0.5-arch1-1-ARCH (builduser@heftig-17705) (gcc version 8.2.1 20181127 (GCC)) #1 SMP PREEMPT Wed Mar 27 17:53:10 UTC 2019
+--2783-- 
+--2783-- Arch and hwcaps: AMD64, LittleEndian, amd64-cx16-rdtscp-sse3-avx
+--2783-- Page sizes: currently 4096, max supported 4096
+--2783-- Valgrind library directory: /usr/lib/valgrind
+--2783-- Reading syms from /home/korgan/code/nn/nn2
+--2783-- Reading syms from /usr/lib/ld-2.28.so
+--2783-- Reading syms from /usr/lib/valgrind/memcheck-amd64-linux
+--2783--    object doesn't have a dynamic symbol table
+--2783-- Scheduler: using generic scheduler lock implementation.
+--2783-- Reading suppressions file: /usr/lib/valgrind/default.supp
+==2783== embedded gdbserver: reading from /tmp/vgdb-pipe-from-vgdb-to-2783-by-korgan-on-???
+==2783== embedded gdbserver: writing to   /tmp/vgdb-pipe-to-vgdb-from-2783-by-korgan-on-???
+==2783== embedded gdbserver: shared mem   /tmp/vgdb-pipe-shared-mem-vgdb-2783-by-korgan-on-???
+==2783== 
+==2783== TO CONTROL THIS PROCESS USING vgdb (which you probably
+==2783== don't want to do, unless you know exactly what you're doing,
+==2783== or are doing some strange experiment):
+==2783==   /usr/lib/valgrind/../../bin/vgdb --pid=2783 ...command...
+==2783== 
+==2783== TO DEBUG THIS PROCESS USING GDB: start GDB like this
+==2783==   /path/to/gdb ./nn2
+==2783== and then give GDB the following command
+==2783==   target remote | /usr/lib/valgrind/../../bin/vgdb --pid=2783
+==2783== --pid is optional if only one valgrind process is running
+==2783== 
+--2783-- REDIR: 0x401ff20 (ld-linux-x86-64.so.2:strlen) redirected to 0x580c9742 (vgPlain_amd64_linux_REDIR_FOR_strlen)
+--2783-- REDIR: 0x401fcf0 (ld-linux-x86-64.so.2:index) redirected to 0x580c975c (vgPlain_amd64_linux_REDIR_FOR_index)
+--2783-- Reading syms from /usr/lib/valgrind/vgpreload_core-amd64-linux.so
+--2783-- Reading syms from /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so
+==2783== WARNING: new redirection conflicts with existing -- ignoring it
+--2783--     old: 0x0401ff20 (strlen              ) R-> (0000.0) 0x580c9742 vgPlain_amd64_linux_REDIR_FOR_strlen
+--2783--     new: 0x0401ff20 (strlen              ) R-> (2007.0) 0x0483ad80 strlen
+--2783-- REDIR: 0x401c700 (ld-linux-x86-64.so.2:strcmp) redirected to 0x483be40 (strcmp)
+--2783-- REDIR: 0x4020480 (ld-linux-x86-64.so.2:mempcpy) redirected to 0x483f860 (mempcpy)
+--2783-- Reading syms from /usr/lib/libm-2.28.so
+--2783--    object doesn't have a symbol table
+--2783-- Reading syms from /usr/lib/libc-2.28.so
+--2783-- REDIR: 0x4a7a060 (libc.so.6:strchrnul) redirected to 0x482d1c0 (_vgnU_ifunc_wrapper)
+--2783-- REDIR: 0x4a92800 (libc.so.6:wcslen) redirected to 0x482d1c0 (_vgnU_ifunc_wrapper)
+--2783-- REDIR: 0x4a7eb10 (libc.so.6:memrchr) redirected to 0x482d1c0 (_vgnU_ifunc_wrapper)
+--2783-- REDIR: 0x4a93f90 (libc.so.6:wcsnlen) redirected to 0x482d1c0 (_vgnU_ifunc_wrapper)
+--2783-- REDIR: 0x4a78b70 (libc.so.6:memcpy@@GLIBC_2.14) redirected to 0x482d1c0 (_vgnU_ifunc_wrapper)
+--2783-- REDIR: 0x4a78a20 (libc.so.6:strncasecmp) redirected to 0x482d1c0 (_vgnU_ifunc_wrapper)
+--2783-- REDIR: 0x4a786c0 (libc.so.6:memmove) redirected to 0x482d1c0 (_vgnU_ifunc_wrapper)
+--2783-- REDIR: 0x4a77840 (libc.so.6:strncpy) redirected to 0x482d1c0 (_vgnU_ifunc_wrapper)
+--2783-- REDIR: 0x4a789d0 (libc.so.6:strcasecmp) redirected to 0x482d1c0 (_vgnU_ifunc_wrapper)
+--2783-- REDIR: 0x4a77210 (libc.so.6:strcat) redirected to 0x482d1c0 (_vgnU_ifunc_wrapper)
+--2783-- REDIR: 0x4a77880 (libc.so.6:rindex) redirected to 0x482d1c0 (_vgnU_ifunc_wrapper)
+--2783-- REDIR: 0x4a7a030 (libc.so.6:rawmemchr) redirected to 0x482d1c0 (_vgnU_ifunc_wrapper)
+--2783-- REDIR: 0x4a92ca0 (libc.so.6:wmemchr) redirected to 0x482d1c0 (_vgnU_ifunc_wrapper)
+--2783-- REDIR: 0x4a92700 (libc.so.6:wcscmp) redirected to 0x482d1c0 (_vgnU_ifunc_wrapper)
+--2783-- REDIR: 0x4a78830 (libc.so.6:mempcpy) redirected to 0x482d1c0 (_vgnU_ifunc_wrapper)
+--2783-- REDIR: 0x4a78650 (libc.so.6:bcmp) redirected to 0x482d1c0 (_vgnU_ifunc_wrapper)
+--2783-- REDIR: 0x4a777e0 (libc.so.6:strncmp) redirected to 0x482d1c0 (_vgnU_ifunc_wrapper)
+--2783-- REDIR: 0x4a77290 (libc.so.6:strcmp) redirected to 0x482d1c0 (_vgnU_ifunc_wrapper)
+--2783-- REDIR: 0x4a78790 (libc.so.6:memset) redirected to 0x482d1c0 (_vgnU_ifunc_wrapper)
+--2783-- REDIR: 0x4a926d0 (libc.so.6:wcschr) redirected to 0x482d1c0 (_vgnU_ifunc_wrapper)
+--2783-- REDIR: 0x4a77770 (libc.so.6:strnlen) redirected to 0x482d1c0 (_vgnU_ifunc_wrapper)
+--2783-- REDIR: 0x4a77340 (libc.so.6:strcspn) redirected to 0x482d1c0 (_vgnU_ifunc_wrapper)
+--2783-- REDIR: 0x4a77300 (libc.so.6:strcpy) redirected to 0x482d1c0 (_vgnU_ifunc_wrapper)
+--2783-- REDIR: 0x4a778b0 (libc.so.6:strpbrk) redirected to 0x482d1c0 (_vgnU_ifunc_wrapper)
+--2783-- REDIR: 0x4a77250 (libc.so.6:index) redirected to 0x482d1c0 (_vgnU_ifunc_wrapper)
+--2783-- REDIR: 0x4a77740 (libc.so.6:strlen) redirected to 0x482d1c0 (_vgnU_ifunc_wrapper)
+--2783-- REDIR: 0x4a78a70 (libc.so.6:strcasecmp_l) redirected to 0x482d1c0 (_vgnU_ifunc_wrapper)
+--2783-- REDIR: 0x4a78620 (libc.so.6:memchr) redirected to 0x482d1c0 (_vgnU_ifunc_wrapper)
+--2783-- REDIR: 0x4a77b70 (libc.so.6:strspn) redirected to 0x482d1c0 (_vgnU_ifunc_wrapper)
+--2783-- REDIR: 0x4a78990 (libc.so.6:stpncpy) redirected to 0x482d1c0 (_vgnU_ifunc_wrapper)
+--2783-- REDIR: 0x4a78950 (libc.so.6:stpcpy) redirected to 0x482d1c0 (_vgnU_ifunc_wrapper)
+--2783-- REDIR: 0x4a78ac0 (libc.so.6:strncasecmp_l) redirected to 0x482d1c0 (_vgnU_ifunc_wrapper)
+--2783-- REDIR: 0x4a87810 (libc.so.6:__strrchr_sse2) redirected to 0x483a7d0 (__strrchr_sse2)
+--2783-- REDIR: 0x4a87600 (libc.so.6:__strchrnul_sse2) redirected to 0x483f390 (strchrnul)
+--2783-- REDIR: 0x4a738d0 (libc.so.6:malloc) redirected to 0x4837710 (malloc)
+--2783-- REDIR: 0x4a91a00 (libc.so.6:__mempcpy_sse2_unaligned) redirected to 0x483f4a0 (mempcpy)
+--2783-- REDIR: 0x4a87b10 (libc.so.6:__strlen_sse2) redirected to 0x483acc0 (__strlen_sse2)
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x4A42910: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x109750: main (nn2.c:92)
+==2783== 
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x4A4292A: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x109750: main (nn2.c:92)
+==2783== 
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x4A38104: __mpn_extract_double (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A42C03: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x109750: main (nn2.c:92)
+==2783== 
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x4A4205D: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x109750: main (nn2.c:92)
+==2783== 
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x4A42FAA: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x109750: main (nn2.c:92)
+==2783== 
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A42FB8: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x109750: main (nn2.c:92)
+==2783== 
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A36D6C: __mpn_lshift (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A42FBC: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x109750: main (nn2.c:92)
+==2783== 
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A36D6F: __mpn_lshift (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A42FBC: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x109750: main (nn2.c:92)
+==2783== 
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A42FD6: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x109750: main (nn2.c:92)
+==2783== 
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A41959: hack_digit (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A4253B: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x109750: main (nn2.c:92)
+==2783== 
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A37378: __mpn_mul_1 (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A41960: hack_digit (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A4253B: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x109750: main (nn2.c:92)
+==2783== 
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A3739C: __mpn_mul_1 (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A41960: hack_digit (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A4253B: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x109750: main (nn2.c:92)
+==2783== 
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A41959: hack_digit (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A425CC: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x109750: main (nn2.c:92)
+==2783== 
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A37378: __mpn_mul_1 (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A41960: hack_digit (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A425CC: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x109750: main (nn2.c:92)
+==2783== 
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A3739C: __mpn_mul_1 (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A41960: hack_digit (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A425CC: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x109750: main (nn2.c:92)
+==2783== 
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x4A425FF: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x109750: main (nn2.c:92)
+==2783== 
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A41959: hack_digit (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A4260C: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x109750: main (nn2.c:92)
+==2783== 
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A37378: __mpn_mul_1 (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A41960: hack_digit (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A4260C: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x109750: main (nn2.c:92)
+==2783== 
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A3739C: __mpn_mul_1 (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A41960: hack_digit (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A4260C: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x109750: main (nn2.c:92)
+==2783== 
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x4A4261E: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x109750: main (nn2.c:92)
+==2783== 
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A42647: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x109750: main (nn2.c:92)
+==2783== 
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x4A4264D: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x109750: main (nn2.c:92)
+==2783== 
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A42656: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x109750: main (nn2.c:92)
+==2783== 
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x4A4265C: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x109750: main (nn2.c:92)
+==2783== 
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x4A42EC8: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x109750: main (nn2.c:92)
+==2783== 
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x4A428CC: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x109750: main (nn2.c:92)
+==2783== 
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x4A436BF: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x109750: main (nn2.c:92)
+==2783== 
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x4A436A3: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x109750: main (nn2.c:92)
+==2783== 
+--2783-- REDIR: 0x4a91a20 (libc.so.6:memcpy@GLIBC_2.2.5) redirected to 0x483bfa0 (memcpy@GLIBC_2.2.5)
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x4A42910: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x4A4292A: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x4A4205D: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x4A42075: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A43C9A: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A36D6C: __mpn_lshift (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A43C9E: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A36D6F: __mpn_lshift (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A43C9E: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x4A43CC7: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A43CDF: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x4A420AB: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x4A4216F: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x483BFB7: memcpy@GLIBC_2.2.5 (vg_replace_strmem.c:1033)
+==2783==    by 0x4A42130: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x483C130: is_overlap (vg_replace_strmem.c:139)
+==2783==    by 0x483C130: memcpy@GLIBC_2.2.5 (vg_replace_strmem.c:1033)
+==2783==    by 0x4A42130: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x483C146: memcpy@GLIBC_2.2.5 (vg_replace_strmem.c:1033)
+==2783==    by 0x4A42130: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x483C080: memcpy@GLIBC_2.2.5 (vg_replace_strmem.c:1033)
+==2783==    by 0x4A42130: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x4A4213C: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x4A42142: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A3688A: __mpn_cmp (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A4303F: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A3688E: __mpn_cmp (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A4303F: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x4A36895: __mpn_cmp (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A4303F: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x4A43042: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x483BFB7: memcpy@GLIBC_2.2.5 (vg_replace_strmem.c:1033)
+==2783==    by 0x4A421D5: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x483C07D: memcpy@GLIBC_2.2.5 (vg_replace_strmem.c:1033)
+==2783==    by 0x4A421D5: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x483C080: memcpy@GLIBC_2.2.5 (vg_replace_strmem.c:1033)
+==2783==    by 0x4A421D5: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x483C08B: memcpy@GLIBC_2.2.5 (vg_replace_strmem.c:1033)
+==2783==    by 0x4A421D5: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A421DE: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A4222F: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A42235: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A4224F: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x4A42255: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A42288: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A422A7: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x4A422B3: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x4A43E65: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A36E8C: __mpn_rshift (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A43E83: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A36EB1: __mpn_rshift (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A43E83: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x4A36E39: __mpn_rshift (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A43EAB: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x4A36E60: __mpn_rshift (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A43EAB: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x4A36E8A: __mpn_rshift (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A43EAB: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A36E8C: __mpn_rshift (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A43EAB: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x4A36E9D: __mpn_rshift (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A43EAB: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A36EB1: __mpn_rshift (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A43EAB: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A43EC0: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x4A43EC6: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x4A41891: hack_digit (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A4253B: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A36AA0: __mpn_divrem (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A418A7: hack_digit (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A4253B: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A36AA3: __mpn_divrem (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A418A7: hack_digit (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A4253B: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x4A36AB4: __mpn_divrem (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A418A7: hack_digit (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A4253B: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x4A36AD1: __mpn_divrem (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A418A7: hack_digit (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A4253B: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A36AE0: __mpn_divrem (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A418A7: hack_digit (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A4253B: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A36AE7: __mpn_divrem (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A418A7: hack_digit (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A4253B: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x4A36AF3: __mpn_divrem (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A418A7: hack_digit (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A4253B: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A36B23: __mpn_divrem (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A418A7: hack_digit (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A4253B: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A418B4: hack_digit (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A4253B: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A418BC: hack_digit (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A4253B: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A418D3: hack_digit (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A4253B: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x4A418D9: hack_digit (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A4253B: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A37378: __mpn_mul_1 (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A41921: hack_digit (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A4253B: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A3739C: __mpn_mul_1 (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A41921: hack_digit (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A4253B: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x4A41925: hack_digit (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A4253B: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A41937: hack_digit (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A4253B: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A36AA0: __mpn_divrem (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A418A7: hack_digit (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A425CC: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A36AA3: __mpn_divrem (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A418A7: hack_digit (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A425CC: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x4A36AB4: __mpn_divrem (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A418A7: hack_digit (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A425CC: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A36B23: __mpn_divrem (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A418A7: hack_digit (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A425CC: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A418B4: hack_digit (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A425CC: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A418BC: hack_digit (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A425CC: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A418D3: hack_digit (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A425CC: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x4A418D9: hack_digit (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A425CC: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A36AA0: __mpn_divrem (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A418A7: hack_digit (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A4260C: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A36AA3: __mpn_divrem (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A418A7: hack_digit (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A4260C: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x4A36AB4: __mpn_divrem (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A418A7: hack_digit (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A4260C: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== 
+==2783== More than 100 errors detected.  Subsequent errors
+==2783== will still be recorded, but in less detail than before.
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A418B4: hack_digit (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A4260C: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A418BC: hack_digit (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A4260C: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A418D3: hack_digit (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A4260C: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x4A418D9: hack_digit (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A4260C: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A43D09: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x49017D4: ??? (in /usr/lib/libm-2.28.so)
+==2783==    by 0x48796F3: exp (in /usr/lib/libm-2.28.so)
+==2783==    by 0x10AB79: sigmoid (nn2.c:231)
+==2783==    by 0x1099ED: main (nn2.c:97)
+==2783== 
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x4901815: ??? (in /usr/lib/libm-2.28.so)
+==2783==    by 0x48796F3: exp (in /usr/lib/libm-2.28.so)
+==2783==    by 0x10AB79: sigmoid (nn2.c:231)
+==2783==    by 0x1099ED: main (nn2.c:97)
+==2783== 
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4901B6D: ??? (in /usr/lib/libm-2.28.so)
+==2783==    by 0x48796F3: exp (in /usr/lib/libm-2.28.so)
+==2783==    by 0x10AB79: sigmoid (nn2.c:231)
+==2783==    by 0x1099ED: main (nn2.c:97)
+==2783== 
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4901B7A: ??? (in /usr/lib/libm-2.28.so)
+==2783==    by 0x48796F3: exp (in /usr/lib/libm-2.28.so)
+==2783==    by 0x10AB79: sigmoid (nn2.c:231)
+==2783==    by 0x1099ED: main (nn2.c:97)
+==2783== 
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4901B80: ??? (in /usr/lib/libm-2.28.so)
+==2783==    by 0x48796F3: exp (in /usr/lib/libm-2.28.so)
+==2783==    by 0x10AB79: sigmoid (nn2.c:231)
+==2783==    by 0x1099ED: main (nn2.c:97)
+==2783== 
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4901BB1: ??? (in /usr/lib/libm-2.28.so)
+==2783==    by 0x48796F3: exp (in /usr/lib/libm-2.28.so)
+==2783==    by 0x10AB79: sigmoid (nn2.c:231)
+==2783==    by 0x1099ED: main (nn2.c:97)
+==2783== 
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x4879716: exp (in /usr/lib/libm-2.28.so)
+==2783==    by 0x10AB79: sigmoid (nn2.c:231)
+==2783==    by 0x1099ED: main (nn2.c:97)
+==2783== 
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x4879720: exp (in /usr/lib/libm-2.28.so)
+==2783==    by 0x10AB79: sigmoid (nn2.c:231)
+==2783==    by 0x1099ED: main (nn2.c:97)
+==2783== 
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x4879730: exp (in /usr/lib/libm-2.28.so)
+==2783==    by 0x10AB79: sigmoid (nn2.c:231)
+==2783==    by 0x1099ED: main (nn2.c:97)
+==2783== 
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A432CE: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1097A0: main (nn2.c:93)
+==2783== 
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A36D6C: __mpn_lshift (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A432D2: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1097A0: main (nn2.c:93)
+==2783== 
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A36D6F: __mpn_lshift (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A432D2: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1097A0: main (nn2.c:93)
+==2783== 
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A4330C: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1097A0: main (nn2.c:93)
+==2783== 
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x4A433DA: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1097A0: main (nn2.c:93)
+==2783== 
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x4A433CD: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1097A0: main (nn2.c:93)
+==2783== 
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x4A43D98: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1097A0: main (nn2.c:93)
+==2783== 
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A37378: __mpn_mul_1 (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A43DB9: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1097A0: main (nn2.c:93)
+==2783== 
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A37403: __mpn_mul_1 (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A43DB9: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1097A0: main (nn2.c:93)
+==2783== 
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A37472: __mpn_mul_1 (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A43DB9: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1097A0: main (nn2.c:93)
+==2783== 
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A43DD0: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1097A0: main (nn2.c:93)
+==2783== 
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x4A43DE5: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1097A0: main (nn2.c:93)
+==2783== 
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A36E8C: __mpn_rshift (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A44215: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1097A0: main (nn2.c:93)
+==2783== 
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A36EB1: __mpn_rshift (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A44215: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1097A0: main (nn2.c:93)
+==2783== 
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x4A42ED1: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1097A0: main (nn2.c:93)
+==2783== 
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x4A42DDB: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1097A0: main (nn2.c:93)
+==2783== 
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x4A42E03: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1097A0: main (nn2.c:93)
+==2783== 
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x4A42DFA: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1097A0: main (nn2.c:93)
+==2783== 
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x4A42DB6: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x4A42E42: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x4A422E4: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A36E8C: __mpn_rshift (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A42301: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A36EB1: __mpn_rshift (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A42301: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x4A36E39: __mpn_rshift (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A42322: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x4A36E60: __mpn_rshift (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A42322: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x4A36E8A: __mpn_rshift (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A42322: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A36E8C: __mpn_rshift (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A42322: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x4A36E9D: __mpn_rshift (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A42322: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A36EB1: __mpn_rshift (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A42322: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A42337: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x4A4233D: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x4A41925: hack_digit (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A425CC: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A41937: hack_digit (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A425CC: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x4A41925: hack_digit (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A4260C: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A41937: hack_digit (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A4260C: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x4A42F55: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A37378: __mpn_mul_1 (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A37188: __mpn_mul (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A43418: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1097A0: main (nn2.c:93)
+==2783== 
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A37403: __mpn_mul_1 (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A37188: __mpn_mul (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A43418: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1097A0: main (nn2.c:93)
+==2783== 
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A37472: __mpn_mul_1 (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A37188: __mpn_mul (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A43418: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1097A0: main (nn2.c:93)
+==2783== 
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A37195: __mpn_mul (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A43418: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1097A0: main (nn2.c:93)
+==2783== 
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x4A43354: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1097A0: main (nn2.c:93)
+==2783== 
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A43388: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1097A0: main (nn2.c:93)
+==2783== 
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x4A433A4: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1097A0: main (nn2.c:93)
+==2783== 
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x4A433B1: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1097A0: main (nn2.c:93)
+==2783== 
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A4345F: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1097A0: main (nn2.c:93)
+==2783== 
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x4A43465: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1097A0: main (nn2.c:93)
+==2783== 
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x4A442ED: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1097A0: main (nn2.c:93)
+==2783== 
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x4A4430B: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1097A0: main (nn2.c:93)
+==2783== 
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A36D72: __mpn_lshift (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A44320: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1097A0: main (nn2.c:93)
+==2783== 
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A36D97: __mpn_lshift (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A44320: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1097A0: main (nn2.c:93)
+==2783== 
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A4433D: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1097A0: main (nn2.c:93)
+==2783== 
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A37445: __mpn_mul_1 (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A37188: __mpn_mul (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A43418: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1097A0: main (nn2.c:93)
+==2783== 
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A3744D: __mpn_mul_1 (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A37188: __mpn_mul (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A43418: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1097A0: main (nn2.c:93)
+==2783== 
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x4A434F3: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1097A0: main (nn2.c:93)
+==2783== 
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x4A4351F: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1097A0: main (nn2.c:93)
+==2783== 
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A43525: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1097A0: main (nn2.c:93)
+==2783== 
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x4A43528: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1097A0: main (nn2.c:93)
+==2783== 
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A36EC0: __mpn_rshift (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A43AA6: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1097A0: main (nn2.c:93)
+==2783== 
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A36F20: __mpn_rshift (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A43AA6: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1097A0: main (nn2.c:93)
+==2783== 
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x49017DB: ??? (in /usr/lib/libm-2.28.so)
+==2783==    by 0x48796F3: exp (in /usr/lib/libm-2.28.so)
+==2783==    by 0x10AB79: sigmoid (nn2.c:231)
+==2783==    by 0x1099ED: main (nn2.c:97)
+==2783== 
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x49017E6: ??? (in /usr/lib/libm-2.28.so)
+==2783==    by 0x48796F3: exp (in /usr/lib/libm-2.28.so)
+==2783==    by 0x10AB79: sigmoid (nn2.c:231)
+==2783==    by 0x1099ED: main (nn2.c:97)
+==2783== 
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A36E8C: __mpn_rshift (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A43AA6: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x109B7C: main (nn2.c:110)
+==2783== 
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A36EB1: __mpn_rshift (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A43AA6: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x109B7C: main (nn2.c:110)
+==2783== 
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x49018AE: ??? (in /usr/lib/libm-2.28.so)
+==2783==    by 0x48796F3: exp (in /usr/lib/libm-2.28.so)
+==2783==    by 0x10AB79: sigmoid (nn2.c:231)
+==2783==    by 0x1099ED: main (nn2.c:97)
+==2783== 
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x49018B5: ??? (in /usr/lib/libm-2.28.so)
+==2783==    by 0x48796F3: exp (in /usr/lib/libm-2.28.so)
+==2783==    by 0x10AB79: sigmoid (nn2.c:231)
+==2783==    by 0x1099ED: main (nn2.c:97)
+==2783== 
+==2783== Syscall param write(buf) points to uninitialised byte(s)
+==2783==    at 0x4ADA818: write (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A6A85C: _IO_file_write@@GLIBC_2.2.5 (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A69BBE: new_do_write (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A6B9D8: _IO_do_write@@GLIBC_2.2.5 (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A6BE2E: _IO_file_overflow@@GLIBC_2.2.5 (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A4395E: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1097A0: main (nn2.c:93)
+==2783==  Address 0x4bb52d4 is 660 bytes inside a block of size 4,096 alloc'd
+==2783==    at 0x483777F: malloc (vg_replace_malloc.c:299)
+==2783==    by 0x4A5E790: _IO_file_doallocate (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A6CBBF: _IO_doallocbuf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A6BE47: _IO_file_overflow@@GLIBC_2.2.5 (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A6AF36: _IO_file_xsputn@@GLIBC_2.2.5 (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3E875: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x10925A: main (nn2.c:50)
+==2783== 
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A43483: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1097A0: main (nn2.c:93)
+==2783== 
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x4A434A3: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1097A0: main (nn2.c:93)
+==2783== 
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x4A434A9: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1097A0: main (nn2.c:93)
+==2783== 
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x4A43A91: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1097A0: main (nn2.c:93)
+==2783== 
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x4A4352E: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A441B1: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x109750: main (nn2.c:92)
+==2783== 
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x4A441B6: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x109750: main (nn2.c:92)
+==2783== 
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A37445: __mpn_mul_1 (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A43DB9: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1097A0: main (nn2.c:93)
+==2783== 
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A3744D: __mpn_mul_1 (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A43DB9: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1097A0: main (nn2.c:93)
+==2783== 
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A36EC0: __mpn_rshift (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A44215: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1097A0: main (nn2.c:93)
+==2783== 
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A36F20: __mpn_rshift (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A44215: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1097A0: main (nn2.c:93)
+==2783== 
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A36DB0: __mpn_lshift (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A43DFF: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A36E10: __mpn_lshift (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A43DFF: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x4A43E03: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A43E18: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x4A3738E: __mpn_mul_1 (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A41960: hack_digit (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A4253B: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x4A37393: __mpn_mul_1 (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A41960: hack_digit (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A4253B: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x4A37395: __mpn_mul_1 (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A41960: hack_digit (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A4253B: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x4A3739A: __mpn_mul_1 (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A41960: hack_digit (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A4253B: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x4A4262B: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x4A4263E: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A37403: __mpn_mul_1 (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A41960: hack_digit (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A4260C: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1097A0: main (nn2.c:93)
+==2783== 
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A37472: __mpn_mul_1 (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A41960: hack_digit (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A4260C: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1097A0: main (nn2.c:93)
+==2783== 
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A36D72: __mpn_lshift (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A43DFF: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A36D97: __mpn_lshift (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A43DFF: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A37445: __mpn_mul_1 (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A41960: hack_digit (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A4260C: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A3744D: __mpn_mul_1 (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A41960: hack_digit (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A4260C: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x4A42654: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A37195: __mpn_mul (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A42199: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x109750: main (nn2.c:92)
+==2783== 
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x10A6B2: main (nn2.c:192)
+==2783== 
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x10A786: main (nn2.c:205)
+==2783== 
+--2783-- REDIR: 0x4a73f20 (libc.so.6:free) redirected to 0x4838940 (free)
+==2783== 
+==2783== HEAP SUMMARY:
+==2783==     in use at exit: 944 bytes in 17 blocks
+==2783==   total heap usage: 18 allocs, 1 frees, 5,040 bytes allocated
+==2783== 
+==2783== Searching for pointers to 17 not-freed blocks
+==2783== Checked 73,432 bytes
+==2783== 
+==2783== 944 (32 direct, 912 indirect) bytes in 1 blocks are definitely lost in loss record 4 of 4
+==2783==    at 0x483777F: malloc (vg_replace_malloc.c:299)
+==2783==    by 0x109264: main (nn2.c:52)
+==2783== 
+==2783== LEAK SUMMARY:
+==2783==    definitely lost: 32 bytes in 1 blocks
+==2783==    indirectly lost: 912 bytes in 16 blocks
+==2783==      possibly lost: 0 bytes in 0 blocks
+==2783==    still reachable: 0 bytes in 0 blocks
+==2783==         suppressed: 0 bytes in 0 blocks
+==2783== 
+==2783== Use --track-origins=yes to see where uninitialised values come from
+==2783== ERROR SUMMARY: 9053174 errors from 212 contexts (suppressed: 0 from 0)
+==2783== 
+==2783== 1 errors in context 1 of 212:
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x10A786: main (nn2.c:205)
+==2783== 
+==2783== 
+==2783== 1 errors in context 2 of 212:
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x10A6B2: main (nn2.c:192)
+==2783== 
+==2783== 
+==2783== 1 errors in context 3 of 212:
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A3739C: __mpn_mul_1 (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A41960: hack_digit (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A4253B: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x109750: main (nn2.c:92)
+==2783== 
+==2783== 
+==2783== 1 errors in context 4 of 212:
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A37378: __mpn_mul_1 (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A41960: hack_digit (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A4253B: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x109750: main (nn2.c:92)
+==2783== 
+==2783== 
+==2783== 1 errors in context 5 of 212:
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x4A4205D: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x109750: main (nn2.c:92)
+==2783== 
+==2783== 
+==2783== 1 errors in context 6 of 212:
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x4A4292A: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x109750: main (nn2.c:92)
+==2783== 
+==2783== 
+==2783== 1 errors in context 7 of 212:
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x4A42910: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x109750: main (nn2.c:92)
+==2783== 
+==2783== 
+==2783== 2 errors in context 8 of 212:
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x4A43EC6: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== 
+==2783== 2 errors in context 9 of 212:
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A43EC0: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== 
+==2783== 2 errors in context 10 of 212:
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A36EB1: __mpn_rshift (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A43EAB: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== 
+==2783== 2 errors in context 11 of 212:
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x4A36E9D: __mpn_rshift (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A43EAB: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== 
+==2783== 2 errors in context 12 of 212:
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A36E8C: __mpn_rshift (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A43EAB: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== 
+==2783== 2 errors in context 13 of 212:
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x4A36E8A: __mpn_rshift (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A43EAB: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== 
+==2783== 2 errors in context 14 of 212:
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x4A36E60: __mpn_rshift (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A43EAB: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== 
+==2783== 2 errors in context 15 of 212:
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x4A36E39: __mpn_rshift (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A43EAB: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== 
+==2783== 2 errors in context 16 of 212:
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A36EB1: __mpn_rshift (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A43E83: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== 
+==2783== 2 errors in context 17 of 212:
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A36E8C: __mpn_rshift (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A43E83: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== 
+==2783== 2 errors in context 18 of 212:
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x4A43E65: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== 
+==2783== 2 errors in context 19 of 212:
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x4A422B3: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== 
+==2783== 2 errors in context 20 of 212:
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A422A7: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== 
+==2783== 2 errors in context 21 of 212:
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A42288: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== 
+==2783== 2 errors in context 22 of 212:
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A36B23: __mpn_divrem (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A418A7: hack_digit (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A4253B: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== 
+==2783== 2 errors in context 23 of 212:
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x4A36AB4: __mpn_divrem (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A418A7: hack_digit (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A4253B: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== 
+==2783== 2 errors in context 24 of 212:
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A36AA3: __mpn_divrem (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A418A7: hack_digit (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A4253B: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== 
+==2783== 2 errors in context 25 of 212:
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A36AA0: __mpn_divrem (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A418A7: hack_digit (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A4253B: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== 
+==2783== 6 errors in context 26 of 212:
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x4A36AB4: __mpn_divrem (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A418A7: hack_digit (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A425CC: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== 
+==2783== 6 errors in context 27 of 212:
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A36AA3: __mpn_divrem (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A418A7: hack_digit (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A425CC: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== 
+==2783== 6 errors in context 28 of 212:
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A36AA0: __mpn_divrem (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A418A7: hack_digit (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A425CC: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== 
+==2783== 6 errors in context 29 of 212:
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A3739C: __mpn_mul_1 (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A41960: hack_digit (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A425CC: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x109750: main (nn2.c:92)
+==2783== 
+==2783== 
+==2783== 6 errors in context 30 of 212:
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A37378: __mpn_mul_1 (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A41960: hack_digit (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A425CC: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x109750: main (nn2.c:92)
+==2783== 
+==2783== 
+==2783== 40 errors in context 31 of 212:
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x4A43A91: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1097A0: main (nn2.c:93)
+==2783== 
+==2783== 
+==2783== 40 errors in context 32 of 212:
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x4A434A9: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1097A0: main (nn2.c:93)
+==2783== 
+==2783== 
+==2783== 40 errors in context 33 of 212:
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x4A434A3: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1097A0: main (nn2.c:93)
+==2783== 
+==2783== 
+==2783== 40 errors in context 34 of 212:
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A43483: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1097A0: main (nn2.c:93)
+==2783== 
+==2783== 
+==2783== 42 errors in context 35 of 212:
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x4A441B6: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x109750: main (nn2.c:92)
+==2783== 
+==2783== 
+==2783== 42 errors in context 36 of 212:
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A441B1: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x109750: main (nn2.c:92)
+==2783== 
+==2783== 
+==2783== 43 errors in context 37 of 212:
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A36D97: __mpn_lshift (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A43DFF: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== 
+==2783== 43 errors in context 38 of 212:
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A36D72: __mpn_lshift (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A43DFF: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== 
+==2783== 52 errors in context 39 of 212:
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x4A42654: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== 
+==2783== 102 errors in context 40 of 212:
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A37195: __mpn_mul (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A42199: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x109750: main (nn2.c:92)
+==2783== 
+==2783== 
+==2783== 168 errors in context 41 of 212:
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A43D09: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== 
+==2783== 169 errors in context 42 of 212:
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x49017E6: ??? (in /usr/lib/libm-2.28.so)
+==2783==    by 0x48796F3: exp (in /usr/lib/libm-2.28.so)
+==2783==    by 0x10AB79: sigmoid (nn2.c:231)
+==2783==    by 0x1099ED: main (nn2.c:97)
+==2783== 
+==2783== 
+==2783== 268 errors in context 43 of 212:
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A3744D: __mpn_mul_1 (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A41960: hack_digit (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A4260C: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== 
+==2783== 268 errors in context 44 of 212:
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A37445: __mpn_mul_1 (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A41960: hack_digit (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A4260C: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== 
+==2783== 273 errors in context 45 of 212:
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A36E10: __mpn_lshift (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A43DFF: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== 
+==2783== 273 errors in context 46 of 212:
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A36DB0: __mpn_lshift (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A43DFF: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== 
+==2783== 316 errors in context 47 of 212:
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A43E18: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== 
+==2783== 316 errors in context 48 of 212:
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x4A43E03: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== 
+==2783== 485 errors in context 49 of 212:
+==2783== Syscall param write(buf) points to uninitialised byte(s)
+==2783==    at 0x4ADA818: write (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A6A85C: _IO_file_write@@GLIBC_2.2.5 (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A69BBE: new_do_write (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A6B9D8: _IO_do_write@@GLIBC_2.2.5 (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A6BE2E: _IO_file_overflow@@GLIBC_2.2.5 (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A4395E: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1097A0: main (nn2.c:93)
+==2783==  Address 0x4bb52d4 is 660 bytes inside a block of size 4,096 alloc'd
+==2783==    at 0x483777F: malloc (vg_replace_malloc.c:299)
+==2783==    by 0x4A5E790: _IO_file_doallocate (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A6CBBF: _IO_doallocbuf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A6BE47: _IO_file_overflow@@GLIBC_2.2.5 (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A6AF36: _IO_file_xsputn@@GLIBC_2.2.5 (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3E875: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x10925A: main (nn2.c:50)
+==2783== 
+==2783== 
+==2783== 517 errors in context 50 of 212:
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x4A4263E: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== 
+==2783== 517 errors in context 51 of 212:
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x4A4262B: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== 
+==2783== 718 errors in context 52 of 212:
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A36F20: __mpn_rshift (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A44215: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1097A0: main (nn2.c:93)
+==2783== 
+==2783== 
+==2783== 718 errors in context 53 of 212:
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A36EC0: __mpn_rshift (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A44215: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1097A0: main (nn2.c:93)
+==2783== 
+==2783== 
+==2783== 891 errors in context 54 of 212:
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A37403: __mpn_mul_1 (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A41960: hack_digit (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A4260C: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1097A0: main (nn2.c:93)
+==2783== 
+==2783== 
+==2783== 991 errors in context 55 of 212:
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A3744D: __mpn_mul_1 (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A43DB9: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1097A0: main (nn2.c:93)
+==2783== 
+==2783== 
+==2783== 991 errors in context 56 of 212:
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A37445: __mpn_mul_1 (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A43DB9: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1097A0: main (nn2.c:93)
+==2783== 
+==2783== 
+==2783== 1027 errors in context 57 of 212:
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A36F20: __mpn_rshift (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A43AA6: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1097A0: main (nn2.c:93)
+==2783== 
+==2783== 
+==2783== 1027 errors in context 58 of 212:
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A36EC0: __mpn_rshift (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A43AA6: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1097A0: main (nn2.c:93)
+==2783== 
+==2783== 
+==2783== 1054 errors in context 59 of 212:
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A3744D: __mpn_mul_1 (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A37188: __mpn_mul (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A43418: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1097A0: main (nn2.c:93)
+==2783== 
+==2783== 
+==2783== 1054 errors in context 60 of 212:
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A37445: __mpn_mul_1 (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A37188: __mpn_mul (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A43418: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1097A0: main (nn2.c:93)
+==2783== 
+==2783== 
+==2783== 1159 errors in context 61 of 212:
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A37472: __mpn_mul_1 (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A41960: hack_digit (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A4260C: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1097A0: main (nn2.c:93)
+==2783== 
+==2783== 
+==2783== 2210 errors in context 62 of 212:
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x4A4265C: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x109750: main (nn2.c:92)
+==2783== 
+==2783== 
+==2783== 2210 errors in context 63 of 212:
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A42656: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x109750: main (nn2.c:92)
+==2783== 
+==2783== 
+==2783== 2402 errors in context 64 of 212:
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A4433D: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1097A0: main (nn2.c:93)
+==2783== 
+==2783== 
+==2783== 2402 errors in context 65 of 212:
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A36D97: __mpn_lshift (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A44320: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1097A0: main (nn2.c:93)
+==2783== 
+==2783== 
+==2783== 2402 errors in context 66 of 212:
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A36D72: __mpn_lshift (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A44320: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1097A0: main (nn2.c:93)
+==2783== 
+==2783== 
+==2783== 2411 errors in context 67 of 212:
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x4A36AF3: __mpn_divrem (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A418A7: hack_digit (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A4253B: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== 
+==2783== 2554 errors in context 68 of 212:
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x4A4352E: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== 
+==2783== 4165 errors in context 69 of 212:
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x4A43528: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1097A0: main (nn2.c:93)
+==2783== 
+==2783== 
+==2783== 4165 errors in context 70 of 212:
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A43525: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1097A0: main (nn2.c:93)
+==2783== 
+==2783== 
+==2783== 4165 errors in context 71 of 212:
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x4A4351F: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1097A0: main (nn2.c:93)
+==2783== 
+==2783== 
+==2783== 4165 errors in context 72 of 212:
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x4A434F3: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1097A0: main (nn2.c:93)
+==2783== 
+==2783== 
+==2783== 4734 errors in context 73 of 212:
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A41937: hack_digit (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A4260C: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== 
+==2783== 5656 errors in context 74 of 212:
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x4A41925: hack_digit (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A4260C: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== 
+==2783== 5656 errors in context 75 of 212:
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x4A4233D: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== 
+==2783== 5656 errors in context 76 of 212:
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A42337: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== 
+==2783== 5656 errors in context 77 of 212:
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A36EB1: __mpn_rshift (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A42322: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== 
+==2783== 5656 errors in context 78 of 212:
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x4A36E9D: __mpn_rshift (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A42322: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== 
+==2783== 5656 errors in context 79 of 212:
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A36E8C: __mpn_rshift (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A42322: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== 
+==2783== 5656 errors in context 80 of 212:
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x4A36E8A: __mpn_rshift (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A42322: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== 
+==2783== 5656 errors in context 81 of 212:
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x4A36E60: __mpn_rshift (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A42322: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== 
+==2783== 5656 errors in context 82 of 212:
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x4A36E39: __mpn_rshift (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A42322: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== 
+==2783== 5656 errors in context 83 of 212:
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A36EB1: __mpn_rshift (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A42301: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== 
+==2783== 5656 errors in context 84 of 212:
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A36E8C: __mpn_rshift (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A42301: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== 
+==2783== 5656 errors in context 85 of 212:
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x4A422E4: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== 
+==2783== 5658 errors in context 86 of 212:
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x4A418D9: hack_digit (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A4260C: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== 
+==2783== 5658 errors in context 87 of 212:
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A418D3: hack_digit (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A4260C: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== 
+==2783== 5658 errors in context 88 of 212:
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A418BC: hack_digit (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A4260C: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== 
+==2783== 5658 errors in context 89 of 212:
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A418B4: hack_digit (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A4260C: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== 
+==2783== 5658 errors in context 90 of 212:
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x4A36AD1: __mpn_divrem (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A418A7: hack_digit (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A4253B: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== 
+==2783== 5658 errors in context 91 of 212:
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x4A41891: hack_digit (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A4253B: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== 
+==2783== 5658 errors in context 92 of 212:
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x4A42255: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== 
+==2783== 5658 errors in context 93 of 212:
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A4224F: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== 
+==2783== 5658 errors in context 94 of 212:
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A42235: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== 
+==2783== 5658 errors in context 95 of 212:
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A4222F: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== 
+==2783== 5658 errors in context 96 of 212:
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A421DE: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== 
+==2783== 5658 errors in context 97 of 212:
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x483C07D: memcpy@GLIBC_2.2.5 (vg_replace_strmem.c:1033)
+==2783==    by 0x4A421D5: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== 
+==2783== 5658 errors in context 98 of 212:
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x483BFB7: memcpy@GLIBC_2.2.5 (vg_replace_strmem.c:1033)
+==2783==    by 0x4A421D5: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== 
+==2783== 8222 errors in context 99 of 212:
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x4A420AB: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== 
+==2783== 8222 errors in context 100 of 212:
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A43CDF: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== 
+==2783== 8222 errors in context 101 of 212:
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x4A43CC7: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== 
+==2783== 8222 errors in context 102 of 212:
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A36D6F: __mpn_lshift (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A43C9E: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== 
+==2783== 8222 errors in context 103 of 212:
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A36D6C: __mpn_lshift (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A43C9E: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== 
+==2783== 8222 errors in context 104 of 212:
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A43C9A: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== 
+==2783== 8222 errors in context 105 of 212:
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x4A42075: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== 
+==2783== 8306 errors in context 106 of 212:
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x483C146: memcpy@GLIBC_2.2.5 (vg_replace_strmem.c:1033)
+==2783==    by 0x4A42130: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== 
+==2783== 8306 errors in context 107 of 212:
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x483C130: is_overlap (vg_replace_strmem.c:139)
+==2783==    by 0x483C130: memcpy@GLIBC_2.2.5 (vg_replace_strmem.c:1033)
+==2783==    by 0x4A42130: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== 
+==2783== 8306 errors in context 108 of 212:
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x483BFB7: memcpy@GLIBC_2.2.5 (vg_replace_strmem.c:1033)
+==2783==    by 0x4A42130: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== 
+==2783== 8408 errors in context 109 of 212:
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x4A43042: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== 
+==2783== 8408 errors in context 110 of 212:
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x4A42142: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== 
+==2783== 8408 errors in context 111 of 212:
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x4A4213C: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== 
+==2783== 8745 errors in context 112 of 212:
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x49018B5: ??? (in /usr/lib/libm-2.28.so)
+==2783==    by 0x48796F3: exp (in /usr/lib/libm-2.28.so)
+==2783==    by 0x10AB79: sigmoid (nn2.c:231)
+==2783==    by 0x1099ED: main (nn2.c:97)
+==2783== 
+==2783== 
+==2783== 8745 errors in context 113 of 212:
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x49018AE: ??? (in /usr/lib/libm-2.28.so)
+==2783==    by 0x48796F3: exp (in /usr/lib/libm-2.28.so)
+==2783==    by 0x10AB79: sigmoid (nn2.c:231)
+==2783==    by 0x1099ED: main (nn2.c:97)
+==2783== 
+==2783== 
+==2783== 8914 errors in context 114 of 212:
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x49017DB: ??? (in /usr/lib/libm-2.28.so)
+==2783==    by 0x48796F3: exp (in /usr/lib/libm-2.28.so)
+==2783==    by 0x10AB79: sigmoid (nn2.c:231)
+==2783==    by 0x1099ED: main (nn2.c:97)
+==2783== 
+==2783== 
+==2783== 9094 errors in context 115 of 212:
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A41937: hack_digit (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A4253B: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== 
+==2783== 9125 errors in context 116 of 212:
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x4A36895: __mpn_cmp (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A4303F: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== 
+==2783== 9125 errors in context 117 of 212:
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A3688E: __mpn_cmp (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A4303F: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== 
+==2783== 9125 errors in context 118 of 212:
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A3688A: __mpn_cmp (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A4303F: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== 
+==2783== 11316 errors in context 119 of 212:
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x483C08B: memcpy@GLIBC_2.2.5 (vg_replace_strmem.c:1033)
+==2783==    by 0x4A421D5: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== 
+==2783== 11316 errors in context 120 of 212:
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x483C080: memcpy@GLIBC_2.2.5 (vg_replace_strmem.c:1033)
+==2783==    by 0x4A421D5: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== 
+==2783== 11416 errors in context 121 of 212:
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x4A41925: hack_digit (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A4253B: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== 
+==2783== 11418 errors in context 122 of 212:
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x4A418D9: hack_digit (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A4253B: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== 
+==2783== 11418 errors in context 123 of 212:
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A418D3: hack_digit (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A4253B: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== 
+==2783== 11418 errors in context 124 of 212:
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A418BC: hack_digit (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A4253B: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== 
+==2783== 11418 errors in context 125 of 212:
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A418B4: hack_digit (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A4253B: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== 
+==2783== 15092 errors in context 126 of 212:
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4901BB1: ??? (in /usr/lib/libm-2.28.so)
+==2783==    by 0x48796F3: exp (in /usr/lib/libm-2.28.so)
+==2783==    by 0x10AB79: sigmoid (nn2.c:231)
+==2783==    by 0x1099ED: main (nn2.c:97)
+==2783== 
+==2783== 
+==2783== 15092 errors in context 127 of 212:
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4901B80: ??? (in /usr/lib/libm-2.28.so)
+==2783==    by 0x48796F3: exp (in /usr/lib/libm-2.28.so)
+==2783==    by 0x10AB79: sigmoid (nn2.c:231)
+==2783==    by 0x1099ED: main (nn2.c:97)
+==2783== 
+==2783== 
+==2783== 15092 errors in context 128 of 212:
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4901B7A: ??? (in /usr/lib/libm-2.28.so)
+==2783==    by 0x48796F3: exp (in /usr/lib/libm-2.28.so)
+==2783==    by 0x10AB79: sigmoid (nn2.c:231)
+==2783==    by 0x1099ED: main (nn2.c:97)
+==2783== 
+==2783== 
+==2783== 15092 errors in context 129 of 212:
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4901B6D: ??? (in /usr/lib/libm-2.28.so)
+==2783==    by 0x48796F3: exp (in /usr/lib/libm-2.28.so)
+==2783==    by 0x10AB79: sigmoid (nn2.c:231)
+==2783==    by 0x1099ED: main (nn2.c:97)
+==2783== 
+==2783== 
+==2783== 15092 errors in context 130 of 212:
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x4901815: ??? (in /usr/lib/libm-2.28.so)
+==2783==    by 0x48796F3: exp (in /usr/lib/libm-2.28.so)
+==2783==    by 0x10AB79: sigmoid (nn2.c:231)
+==2783==    by 0x1099ED: main (nn2.c:97)
+==2783== 
+==2783== 
+==2783== 15776 errors in context 131 of 212:
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A36EB1: __mpn_rshift (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A43AA6: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x109B7C: main (nn2.c:110)
+==2783== 
+==2783== 
+==2783== 15776 errors in context 132 of 212:
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A36E8C: __mpn_rshift (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A43AA6: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x109B7C: main (nn2.c:110)
+==2783== 
+==2783== 
+==2783== 16612 errors in context 133 of 212:
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x483C080: memcpy@GLIBC_2.2.5 (vg_replace_strmem.c:1033)
+==2783==    by 0x4A42130: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== 
+==2783== 17749 errors in context 134 of 212:
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x4A433B1: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1097A0: main (nn2.c:93)
+==2783== 
+==2783== 
+==2783== 19165 errors in context 135 of 212:
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x4A4430B: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1097A0: main (nn2.c:93)
+==2783== 
+==2783== 
+==2783== 19165 errors in context 136 of 212:
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x4A442ED: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1097A0: main (nn2.c:93)
+==2783== 
+==2783== 
+==2783== 19205 errors in context 137 of 212:
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x4A43465: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1097A0: main (nn2.c:93)
+==2783== 
+==2783== 
+==2783== 19205 errors in context 138 of 212:
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A4345F: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1097A0: main (nn2.c:93)
+==2783== 
+==2783== 
+==2783== 20512 errors in context 139 of 212:
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x4A3739A: __mpn_mul_1 (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A41960: hack_digit (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A4253B: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== 
+==2783== 20512 errors in context 140 of 212:
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x4A37395: __mpn_mul_1 (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A41960: hack_digit (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A4253B: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== 
+==2783== 20512 errors in context 141 of 212:
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x4A37393: __mpn_mul_1 (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A41960: hack_digit (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A4253B: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== 
+==2783== 20512 errors in context 142 of 212:
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x4A3738E: __mpn_mul_1 (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A41960: hack_digit (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A4253B: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== 
+==2783== 20962 errors in context 143 of 212:
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A37403: __mpn_mul_1 (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A37188: __mpn_mul (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A43418: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1097A0: main (nn2.c:93)
+==2783== 
+==2783== 
+==2783== 21914 errors in context 144 of 212:
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x4A433A4: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1097A0: main (nn2.c:93)
+==2783== 
+==2783== 
+==2783== 21914 errors in context 145 of 212:
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A43388: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1097A0: main (nn2.c:93)
+==2783== 
+==2783== 
+==2783== 21914 errors in context 146 of 212:
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x4A43354: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1097A0: main (nn2.c:93)
+==2783== 
+==2783== 
+==2783== 21914 errors in context 147 of 212:
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A37195: __mpn_mul (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A43418: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1097A0: main (nn2.c:93)
+==2783== 
+==2783== 
+==2783== 22016 errors in context 148 of 212:
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A37472: __mpn_mul_1 (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A37188: __mpn_mul (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A43418: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1097A0: main (nn2.c:93)
+==2783== 
+==2783== 
+==2783== 22016 errors in context 149 of 212:
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A37378: __mpn_mul_1 (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A37188: __mpn_mul (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A43418: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1097A0: main (nn2.c:93)
+==2783== 
+==2783== 
+==2783== 22435 errors in context 150 of 212:
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x4A4264D: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x109750: main (nn2.c:92)
+==2783== 
+==2783== 
+==2783== 22435 errors in context 151 of 212:
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A42647: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x109750: main (nn2.c:92)
+==2783== 
+==2783== 
+==2783== 22602 errors in context 152 of 212:
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x4A42DB6: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== 
+==2783== 24006 errors in context 153 of 212:
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x4879730: exp (in /usr/lib/libm-2.28.so)
+==2783==    by 0x10AB79: sigmoid (nn2.c:231)
+==2783==    by 0x1099ED: main (nn2.c:97)
+==2783== 
+==2783== 
+==2783== 24006 errors in context 154 of 212:
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x4879720: exp (in /usr/lib/libm-2.28.so)
+==2783==    by 0x10AB79: sigmoid (nn2.c:231)
+==2783==    by 0x1099ED: main (nn2.c:97)
+==2783== 
+==2783== 
+==2783== 24006 errors in context 155 of 212:
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x4879716: exp (in /usr/lib/libm-2.28.so)
+==2783==    by 0x10AB79: sigmoid (nn2.c:231)
+==2783==    by 0x1099ED: main (nn2.c:97)
+==2783== 
+==2783== 
+==2783== 24006 errors in context 156 of 212:
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x49017D4: ??? (in /usr/lib/libm-2.28.so)
+==2783==    by 0x48796F3: exp (in /usr/lib/libm-2.28.so)
+==2783==    by 0x10AB79: sigmoid (nn2.c:231)
+==2783==    by 0x1099ED: main (nn2.c:97)
+==2783== 
+==2783== 
+==2783== 25916 errors in context 157 of 212:
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x4A42DFA: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1097A0: main (nn2.c:93)
+==2783== 
+==2783== 
+==2783== 28566 errors in context 158 of 212:
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A41937: hack_digit (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A425CC: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== 
+==2783== 33936 errors in context 159 of 212:
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x4A41925: hack_digit (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A425CC: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== 
+==2783== 33948 errors in context 160 of 212:
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x4A418D9: hack_digit (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A425CC: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== 
+==2783== 33948 errors in context 161 of 212:
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A418D3: hack_digit (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A425CC: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== 
+==2783== 33948 errors in context 162 of 212:
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A418BC: hack_digit (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A425CC: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== 
+==2783== 33948 errors in context 163 of 212:
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A418B4: hack_digit (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A425CC: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== 
+==2783== 40071 errors in context 164 of 212:
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A36AE7: __mpn_divrem (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A418A7: hack_digit (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A4253B: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== 
+==2783== 40071 errors in context 165 of 212:
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A36AE0: __mpn_divrem (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A418A7: hack_digit (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A4253B: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== 
+==2783== 40584 errors in context 166 of 212:
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x4A42F55: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== 
+==2783== 45731 errors in context 167 of 212:
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A42FD6: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x109750: main (nn2.c:92)
+==2783== 
+==2783== 
+==2783== 45731 errors in context 168 of 212:
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A36D6F: __mpn_lshift (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A42FBC: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x109750: main (nn2.c:92)
+==2783== 
+==2783== 
+==2783== 45731 errors in context 169 of 212:
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A36D6C: __mpn_lshift (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A42FBC: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x109750: main (nn2.c:92)
+==2783== 
+==2783== 
+==2783== 45731 errors in context 170 of 212:
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A42FB8: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x109750: main (nn2.c:92)
+==2783== 
+==2783== 
+==2783== 48295 errors in context 171 of 212:
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A41959: hack_digit (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A4253B: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x109750: main (nn2.c:92)
+==2783== 
+==2783== 
+==2783== 48880 errors in context 172 of 212:
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A36EB1: __mpn_rshift (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A44215: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1097A0: main (nn2.c:93)
+==2783== 
+==2783== 
+==2783== 48880 errors in context 173 of 212:
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A36E8C: __mpn_rshift (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A44215: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1097A0: main (nn2.c:93)
+==2783== 
+==2783== 
+==2783== 48923 errors in context 174 of 212:
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A37403: __mpn_mul_1 (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A43DB9: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1097A0: main (nn2.c:93)
+==2783== 
+==2783== 
+==2783== 49914 errors in context 175 of 212:
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x4A43DE5: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1097A0: main (nn2.c:93)
+==2783== 
+==2783== 
+==2783== 49914 errors in context 176 of 212:
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A43DD0: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1097A0: main (nn2.c:93)
+==2783== 
+==2783== 
+==2783== 49914 errors in context 177 of 212:
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A37472: __mpn_mul_1 (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A43DB9: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1097A0: main (nn2.c:93)
+==2783== 
+==2783== 
+==2783== 49914 errors in context 178 of 212:
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A37378: __mpn_mul_1 (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A43DB9: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1097A0: main (nn2.c:93)
+==2783== 
+==2783== 
+==2783== 51008 errors in context 179 of 212:
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A3739C: __mpn_mul_1 (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A41921: hack_digit (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A4253B: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== 
+==2783== 51008 errors in context 180 of 212:
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A37378: __mpn_mul_1 (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A41921: hack_digit (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A4253B: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== 
+==2783== 51016 errors in context 181 of 212:
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x4A36AB4: __mpn_divrem (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A418A7: hack_digit (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A4260C: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== 
+==2783== 51016 errors in context 182 of 212:
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A36AA3: __mpn_divrem (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A418A7: hack_digit (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A4260C: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== 
+==2783== 51016 errors in context 183 of 212:
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A36AA0: __mpn_divrem (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A418A7: hack_digit (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A4260C: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== 
+==2783== 51022 errors in context 184 of 212:
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A36B23: __mpn_divrem (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A418A7: hack_digit (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A425CC: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== 
+==2783== 54440 errors in context 185 of 212:
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x4A42E42: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== 
+==2783== 58484 errors in context 186 of 212:
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x4A42DDB: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1097A0: main (nn2.c:93)
+==2783== 
+==2783== 
+==2783== 58484 errors in context 187 of 212:
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x4A42ED1: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1097A0: main (nn2.c:93)
+==2783== 
+==2783== 
+==2783== 59799 errors in context 188 of 212:
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x4A43D98: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1097A0: main (nn2.c:93)
+==2783== 
+==2783== 
+==2783== 62056 errors in context 189 of 212:
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A4330C: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1097A0: main (nn2.c:93)
+==2783== 
+==2783== 
+==2783== 62056 errors in context 190 of 212:
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A36D6F: __mpn_lshift (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A432D2: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1097A0: main (nn2.c:93)
+==2783== 
+==2783== 
+==2783== 62056 errors in context 191 of 212:
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A36D6C: __mpn_lshift (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A432D2: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1097A0: main (nn2.c:93)
+==2783== 
+==2783== 
+==2783== 62056 errors in context 192 of 212:
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A432CE: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1097A0: main (nn2.c:93)
+==2783== 
+==2783== 
+==2783== 84400 errors in context 193 of 212:
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x4A42E03: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1097A0: main (nn2.c:93)
+==2783== 
+==2783== 
+==2783== 106886 errors in context 194 of 212:
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x4A4216F: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== 
+==2783== 107787 errors in context 195 of 212:
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x4A42FAA: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x109750: main (nn2.c:92)
+==2783== 
+==2783== 
+==2783== 108821 errors in context 196 of 212:
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A41959: hack_digit (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A4260C: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x109750: main (nn2.c:92)
+==2783== 
+==2783== 
+==2783== 112688 errors in context 197 of 212:
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x4A425FF: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x109750: main (nn2.c:92)
+==2783== 
+==2783== 
+==2783== 113582 errors in context 198 of 212:
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x4A42EC8: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x109750: main (nn2.c:92)
+==2783== 
+==2783== 
+==2783== 113582 errors in context 199 of 212:
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x4A4261E: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x109750: main (nn2.c:92)
+==2783== 
+==2783== 
+==2783== 116008 errors in context 200 of 212:
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x4A4205D: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== 
+==2783== 116008 errors in context 201 of 212:
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x4A4292A: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== 
+==2783== 116008 errors in context 202 of 212:
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x4A42910: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1096F5: main (nn2.c:91)
+==2783== 
+==2783== 
+==2783== 116009 errors in context 203 of 212:
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x4A428CC: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x109750: main (nn2.c:92)
+==2783== 
+==2783== 
+==2783== 116009 errors in context 204 of 212:
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x4A38104: __mpn_extract_double (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A42C03: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x109750: main (nn2.c:92)
+==2783== 
+==2783== 
+==2783== 622536 errors in context 205 of 212:
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A41959: hack_digit (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A425CC: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x109750: main (nn2.c:92)
+==2783== 
+==2783== 
+==2783== 676181 errors in context 206 of 212:
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x4A436A3: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x109750: main (nn2.c:92)
+==2783== 
+==2783== 
+==2783== 676181 errors in context 207 of 212:
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x4A436BF: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x109750: main (nn2.c:92)
+==2783== 
+==2783== 
+==2783== 682391 errors in context 208 of 212:
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x4A433CD: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1097A0: main (nn2.c:93)
+==2783== 
+==2783== 
+==2783== 742190 errors in context 209 of 212:
+==2783== Conditional jump or move depends on uninitialised value(s)
+==2783==    at 0x4A433DA: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x1097A0: main (nn2.c:93)
+==2783== 
+==2783== 
+==2783== 778486 errors in context 210 of 212:
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A3739C: __mpn_mul_1 (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A41960: hack_digit (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A4260C: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x109750: main (nn2.c:92)
+==2783== 
+==2783== 
+==2783== 779645 errors in context 211 of 212:
+==2783== Use of uninitialised value of size 8
+==2783==    at 0x4A37378: __mpn_mul_1 (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A41960: hack_digit (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A4260C: __printf_fp_l (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A3FCCE: vfprintf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x4A47449: printf (in /usr/lib/libc-2.28.so)
+==2783==    by 0x109750: main (nn2.c:92)
+==2783== 
+==2783== ERROR SUMMARY: 9053174 errors from 212 contexts (suppressed: 0 from 0)
