@@ -47,6 +47,11 @@ int main(int argc, char **argv){
         exit(1);
     }
 
+    printf("NEURAL NETWORK\n  layers=%u\n", LAYERS);
+    for(i = 0; i < LAYERS; i++)
+        printf("    layer %u: %u neurons\n", i, node_count[i]);
+    putchar('\n');
+
     printf("creating network...");
     // malloc space for input, hidden, and output layers.
     if((network = malloc(LAYERS * sizeof(neuron*))) == NULL) { puts("malloc failed"); exit(1); }
@@ -103,8 +108,10 @@ int main(int argc, char **argv){
             double error   = diff * diff;
 
             // if I've run at least 1000 epochs and the error is < 2%, bail.
-            if(error < 0.02 && e > 1000)
+            if(error < 0.02 && e > 1000){
+                printf("error is low enough. Ending training...");
                 goto beep;
+            }
 
             double dEdsig  = -2.0 * diff;
             if(e % 100 == 0) printf("error = %lf\n", error);
