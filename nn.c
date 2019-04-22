@@ -61,7 +61,7 @@ int main(int argc, char **argv){
         if((network[i] = malloc(node_count[i] * sizeof(neuron))) == NULL) { puts("malloc failed"); exit(1); }
     }
 
-    // malloc space for weights and there adjustments in each node in each layer.
+    // malloc space for weights and their adjustments in each node in each layer.
     for(i = 1; i < LAYERS; i++){
         for(j = 0; j < node_count[i]; j++){
             if((network[i][j].w = malloc(node_count[i - 1] * sizeof(double))) == NULL) { puts("malloc failed"); exit(1); }
