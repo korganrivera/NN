@@ -87,21 +87,7 @@ int main(int argc, char **argv){
                 network[0][j].sig = data[d][j];
 
             // feed forward.
-            for(i = 1; i < LAYERS; i++){
-                for(j = 0; j < node_count[i]; j++){
-                    network[i][j].sum = 0;
-                    for(k = 0; k < node_count[i - 1]; k++){
-                        network[i][j].sum += network[i][j].w[k] * network[i - 1][k].sig;
-                    }
-                    network[i][j].sum += network[i][j].b;
-                    network[i][j].sig = sigmoid(network[i][j].sum);
-
-                    // calc dsig_dsum while we're here even though it's not really part of feed forwarding.
-                    network[i][j].dsig_dsum = network[i][j].sig * (1 - network[i][j].sig);
-                }
-            }
-
-            // feed_forward(network, node_count);
+            feed_forward(network, node_count);
 
             // calculate error and dE/dsig.
             double diff    = data[d][2] - network[LAYERS - 1][0].sig;
